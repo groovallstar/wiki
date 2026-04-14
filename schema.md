@@ -25,7 +25,7 @@ wiki/
 └── log.md            # (선택) 인제스트·린트 로그
 ```
 
-`index.md`, `log.md`는 위키 규모가 커질 때 도입한다. 초기 단계에서는 없어도 된다.
+`index.md`는 규모가 작더라도 Ingest마다 갱신하는 것을 기본으로 삼는다 (Karpathy 모델에서 카탈로그는 선택이 아니라 운영의 중심이다). `log.md`는 초기에는 생략 가능하나, 도입 시 §log.md prefix 규칙을 따른다.
 
 ## 페이지 유형
 
@@ -65,6 +65,7 @@ LLM-Wiki의 세 가지 핵심 작업이다. 각각 트리거와 절차가 정해
 2. 해당 개념의 주장을 근거로 답변을 합성한다
 3. 답변에 인용한 `concepts/` 및 `sources/` 페이지 경로를 명시한다
 4. 위키에 정보가 없거나 낡아 보이면 인제스트 트리거로 연결
+5. **환원(복리 효과)**: 답변이 재사용 가치가 있다고 판단되면 휘발시키지 않고 `concepts/`에 새 페이지로 파일링하거나 기존 페이지에 병합한다. 이것이 Karpathy 모델의 복리 메커니즘이다 — 좋은 질문·답변이 곧 위키의 성장이다.
 
 ### 3. 린트 (Lint) — 품질 유지
 
@@ -142,17 +143,31 @@ LLM-Wiki의 세 가지 핵심 작업이다. 각각 트리거와 절차가 정해
 
 ### (선택) `log.md`
 
-인제스트·린트 이력의 시간순 로그.
+인제스트·린트 이력의 시간순 append-only 로그. CLI grep이 가능하도록 **파싱 가능한 prefix 규칙**을 따른다:
+
+```
+## [YYYY-MM-DD] <op> | <title>
+```
+
+- `<op>` ∈ `ingest` | `lint` | `query-filed` (쿼리 환원)
+- 한 줄 요지를 바로 아래 불릿으로 남긴다
+
+예시:
 
 ```markdown
 # Log
 
-## 2026-04-13
-- Ingest: addyosmani/agent-skills → concepts/agent-skills.md 생성, sources/addyosmani-agent-skills.md 작성
-- Lint: bio-tagging.md 내 끊어진 참조 1건 수정
+## [2026-04-13] ingest | addyosmani/agent-skills
+- concepts/agent-skills.md 생성, sources/addyosmani-agent-skills.md 작성
+## [2026-04-13] lint | bio-tagging
+- 끊어진 참조 1건 수정
+## [2026-04-14] query-filed | BIO vs IOB2 선택 근거
+- concepts/bio-tagging.md §결정 근거 절에 병합
 ```
 
 ## 비고
+
+> **유지 비용의 본질**: 지식 베이스 유지의 고통은 읽기·사고가 아니라 bookkeeping(크로스 링크 갱신·참조 일관성·고아 페이지 점검)이다. LLM이 그 부담을 대신 지므로 사람은 방향성·검수에 집중한다. — Karpathy
 
 - "LLM이 프로그래머, Obsidian이 IDE, 위키가 코드베이스" — 유지 비용을 LLM이 감당하므로 사람은 방향성·검수에 집중한다.
 - `qmd`(BM25/벡터 하이브리드 로컬 검색) 같은 외부 도구는 이 스키마와 호환되지만 필수는 아니다.

@@ -46,7 +46,24 @@ git submodule update --init --recursive
 
 이후 위키 수정은 `docs/wiki/`에서 직접 커밋·푸시하고, 호스트 저장소는 `git add docs/wiki && git commit`으로 pin 커밋을 갱신한다.
 
+## 운영 스킬 (`docwiki`)
+
+이 위키는 `.claude/skills/docwiki/SKILL.md` 스킬로 운영된다. 아래 트리거 키워드가 감지되면 Claude Code가 스킬을 자동 호출해 `schema.md` 규칙대로 작업한다.
+
+| 작업 | 트리거 키워드 예시 | 동작 요약 |
+|------|--------------------|-----------|
+| **Ingest** | "위키에 추가", "위키 업데이트", "위키에 넣어", "wiki에 추가", "wiki ingest" | 원문 요약 → `sources/<slug>.md` 작성 → 관련 `concepts/` 연쇄 갱신 → `index.md`·`log.md` 기록 |
+| **Query** | "wiki 조회", "wiki query", "wiki에서 X 찾아줘" | `concepts/` 우선 검색 → 인용구 포함 답변 → 재사용 가치 있으면 `concepts/`에 환원(복리) |
+| **Lint** | "wiki 린트", "wiki lint" | 전 페이지 스캔 → 고아/끊어진 링크/프로젝트 경로 누출 등 6개 항목 리포트·수정 |
+
+### 설계 메모
+
+- 스킬은 **키워드 트리거**로 호출된다. 일반 프롬프트에서는 위키를 자동 참조하지 않는다 — 필요할 때만 읽는다.
+- 스킬 본체는 `.claude/skills/docwiki/SKILL.md`, 데이터 규칙은 `schema.md`, 상위 규칙은 저장소 루트의 `CLAUDE.md §Wiki 운영`. 세 곳 모두 schema 우선 원칙으로 정합성을 유지한다.
+- OMC의 범용 `wiki` 스킬(`.omc/wiki/` 대상)과는 별개 시스템이다. 섞지 않는다.
+
 ## 참고
 
 - LLM-Wiki 개념 원문: https://news.hada.io/topic?id=28208
+- Karpathy gist 원문: https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f
 - 페이지 템플릿·교차 참조 규칙: [`schema.md`](./schema.md)

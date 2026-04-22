@@ -242,7 +242,7 @@ tags   = ['B_PS','I','B_PS','B_LC','B_LC']
 
 ## 출처
 
-- `sources/ramshaw-marcus-1995-bio-tagging.md` — BIO/IOB 태그 스킴의 원조
-- `sources/park-2021-klue.md` — 음절 단위 NER (KLUE) 사례
-- `sources/pan-2017-wikiann.md` — 어절 단위 NER (WikiANN) 사례
-- `sources/kmou-ner-dataset.md` — 형태소 단위 + 비표준 BIO (KMOU) 사례
+- `sources/ner/ramshaw-marcus-1995-bio-tagging.md` — BIO/IOB 태그 스킴의 원조
+- `sources/ner/park-2021-klue.md` — 음절 단위 NER (KLUE) 사례
+- `sources/ner/pan-2017-wikiann.md` — 어절 단위 NER (WikiANN) 사례
+- `sources/ner/kmou-ner-dataset.md` — 형태소 단위 + 비표준 BIO (KMOU) 사례

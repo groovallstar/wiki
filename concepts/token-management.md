@@ -201,4 +201,4 @@ AI 도구마다 강점이 다르므로 역할을 분리한다:
 
 ## 출처
 
-- `sources/jeong-2026-vibe-coding-token-management.md` — 원문 요약 및 11가지 전략 상세
+- `sources/dev/jeong-2026-vibe-coding-token-management.md` — 원문 요약 및 11가지 전략 상세

@@ -81,4 +81,4 @@ UI/프론트엔드/배포 계열은 CLI·노트북 기반 NLP 파이프라인 �
 
 ## 출처
 
-- `sources/addyosmani-agent-skills.md` — 카탈로그 원본 및 수록 스킬 목록
+- `sources/dev/addyosmani-agent-skills.md` — 카탈로그 원본 및 수록 스킬 목록

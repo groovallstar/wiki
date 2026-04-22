@@ -19,13 +19,30 @@
 ```
 wiki/
 ├── schema.md         # 이 문서 (스키마 계층)
-├── concepts/         # 위키 계층: LLM이 유지하는 개념·방법론 페이지
-├── sources/          # 원문 소스 계층: 외부 자료 요약 노트
+├── concepts/         # 위키 계층 (flat): LLM이 유지하는 개념·방법론 페이지
+├── sources/          # 원문 소스 계층 (topic-grouped)
+│   ├── <topic>/      # 예: ner/, labeling/, env/, dev/
+│   └── ...
 ├── index.md          # (선택) 전체 페이지 카탈로그
 └── log.md            # (선택) 인제스트·린트 로그
 ```
 
 `index.md`는 규모가 작더라도 Ingest마다 갱신하는 것을 기본으로 삼는다 (Karpathy 모델에서 카탈로그는 선택이 아니라 운영의 중심이다). `log.md`는 초기에는 생략 가능하나, 도입 시 §log.md prefix 규칙을 따른다.
+
+### 폴더 정책: sources 는 topic-grouped, concepts 는 flat
+
+소스와 개념은 성격이 다르므로 계층 정책도 다르다.
+
+| 축 | `sources/` | `concepts/` |
+|---|---|---|
+| 성장 속도 | 읽은 원문 수에 비례 (빠름) | 합성되는 개념 수 (느림) |
+| 파일 성격 | 1 파일 = 1 원문 = 단일 도메인 | 여러 출처를 엮어 도메인 교차 |
+| 참조 방향 | 주로 수신 (concepts → sources) | 허브 (수·발신 모두) |
+| 이동 비용 | 낮음 | 높음 (cross-ref 대규모 갱신) |
+
+**`sources/<topic>/<slug>.md`** — topic 폴더로 묶는다. 현재 운영 중인 topic: `ner/`·`labeling/`·`env/`·`dev/`. 새 topic 은 최소 2개 이상의 원문이 모이고 기존 topic 에 어울리지 않을 때 신설.
+
+**`concepts/<slug>.md`** — 평면 유지. 개념은 주제를 가로지르므로 단일 parent 폴더 선택이 자주 인위적이 되고, concept-to-concept cross-ref 가 허브 구조라 이동 비용이 크다. 재검토 임계치: 페이지 수 > 15, 명확히 구분되는 3개 이상 클러스터 각각 ≥ 4 페이지, 동일 폴더 내 cross-ref 가 폴더간 cross-ref 를 압도.
 
 ## 페이지 유형
 
@@ -84,7 +101,7 @@ LLM-Wiki의 세 가지 핵심 작업이다. 각각 트리거와 절차가 정해
 ## 교차 참조 규칙
 
 - 위키 내 참조는 `wiki/` 기준 상대 경로
-  - 예: `` `concepts/bio-tagging.md` ``, `` `sources/park-2021-klue.md` ``
+  - 예: `` `concepts/bio-tagging.md` ``, `` `sources/ner/park-2021-klue.md` ``
 - `concepts/` 페이지는 자신의 주장을 뒷받침하는 `sources/` 파일을 반드시 인용한다
 - `sources/` 페이지는 자신을 인용하는 `concepts/` 페이지를 역링크로 기록한다
 - 외부(호스트 저장소) 참조는 위키에 직접 기재하지 않는다 — 호스트 저장소 쪽에서 링크한다
@@ -137,7 +154,7 @@ LLM-Wiki의 세 가지 핵심 작업이다. 각각 트리거와 절차가 정해
 - ...
 
 ## Sources
-- `sources/ramshaw-marcus-1995-bio-tagging.md` — BIO 스킴 원조 논문
+- `sources/ner/ramshaw-marcus-1995-bio-tagging.md` — BIO 스킴 원조 논문
 - ...
 ```
 

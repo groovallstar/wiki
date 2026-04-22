@@ -402,4 +402,4 @@ venv를 deactivate하거나 다른 venv로 바꾸면 즉시 해제된다. `.pth`
 
 ## 출처
 
-- `sources/python-editable-install-research.md` — PEP 660 스펙, hatchling 기본 `.pth` 메커니즘, uv의 자동 editable 처리 동작을 통합 정리한 조사 노트.
+- `sources/env/python-editable-install-research.md` — PEP 660 스펙, hatchling 기본 `.pth` 메커니즘, uv의 자동 editable 처리 동작을 통합 정리한 조사 노트.

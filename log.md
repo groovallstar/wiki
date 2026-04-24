@@ -2,6 +2,12 @@
 
 인제스트·린트 이력의 시간순 append-only 로그.
 
+## [2026-04-24] ingest | 세션 컨텍스트 핸드오프 4계층 전략
+- `sources/dev/epril-2026-session-context-handoff.md` 신규 (정도현 2026-04-23 원문 요약).
+- `concepts/session-handoff.md` 신규 (4계층 전략 · Handoff 문서 필수 섹션 · Registry 패턴 · 안티패턴).
+- `concepts/token-management.md` §3, §4에 `concepts/session-handoff.md` cross-reference 추가 (focus 지시·hypothesis 원칙 위임).
+- `index.md` concepts/sources 카탈로그 갱신.
+
 ## [2026-04-22] ingest | Cohen's kappa + Wikidata anchor verification
 - `sources/labeling/cohen-1960-kappa.md` 신규 작성 (Cohen 1960 원문 요약; 이후 reorg 로 labeling/ 으로 이동)
 - `sources/labeling/vrandecic-2014-wikidata.md` 신규 작성 (Wikidata CACM 2014 원문 요약; 이후 reorg 2건으로 labeling/ 으로 이동)

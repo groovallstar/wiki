@@ -9,6 +9,7 @@
 - `concepts/kb-anchor-verification.md` — 외부 지식 베이스를 앵커로 삼은 라벨 독립 검증
 - `concepts/agent-skills.md` — Claude Code 의 Agent Skills 운영 패턴
 - `concepts/token-management.md` — LLM 컨텍스트 토큰 운영 전략
+- `concepts/session-handoff.md` — 세션 전환 시 맥락 유실을 막는 4계층 핸드오프 전략
 - `concepts/src-layout-packaging.md` — Python src-layout 과 editable install
 
 ## Sources
@@ -35,3 +36,4 @@
 
 - `sources/dev/addyosmani-agent-skills.md` — Addy Osmani 의 Agent Skills 논의
 - `sources/dev/jeong-2026-vibe-coding-token-management.md` — vibe coding 맥락의 토큰 관리
+- `sources/dev/epril-2026-session-context-handoff.md` — 세션 간 컨텍스트 핸드오프 4계층 전략

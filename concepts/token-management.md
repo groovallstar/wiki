@@ -43,6 +43,8 @@ Claude Code, Codex, Gemini 같은 도구 사용 시 응답 지연, 규칙 망각
 
 **철학**: 긴 세션 유지보다 "짧게 끊고 재시작"하는 능력이 중요하다.
 
+> `/compact`는 focus 지시 없이는 결과가 예측 불가능하다는 경고, 그리고 auto-compact가 *가장 덜 똑똑한 순간*에 발동하는 비대칭 문제에 대한 상세는 `concepts/session-handoff.md` §Tier 1 참조.
+
 ---
 
 ## 4. Handoff 문서로 세션 재개 비용 최소화
@@ -59,6 +61,8 @@ Claude Code, Codex, Gemini 같은 도구 사용 시 응답 지연, 규칙 망각
 다음 작업: <이어서 할 일>
 완료 조건: <작업 완료 기준>
 ```
+
+> Handoff 문서의 **필수 섹션·작성 규칙**(상태 서술형 vs 명령형, 라인 번호 포함, 검증 지시 필수), **Handoff = hypothesis** 원칙, **Report Registry 패턴** 등 4계층(Tier) 상세는 `concepts/session-handoff.md` 참조.
 
 ---
 

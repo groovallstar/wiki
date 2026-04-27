@@ -1,6 +1,6 @@
 # Agent Skills — 평가 및 적용 현황
 
-- **유형**: 개념 (methodology) · `docs/schema.md` 참조
+- **유형**: 개념 (methodology) · `schema.md` 참조
 - **출처**: https://github.com/addyosmani/agent-skills/tree/main/skills
 이 페이지는 AI 에이전트 스킬 카탈로그를 NER/LLM 파이프라인 프로젝트 관점에서 평가하고, 강력 추천·보조·제외 기준을 정리한다.
 
@@ -55,7 +55,7 @@
 
 ### 8. code-simplification
 - **요지**: 동작을 정확히 보존하면서 가독성을 높이는 리팩터링. "줄 수 감소"가 아닌 "이해 속도 향상"이 목표.
-- **적합성**: `tag_aligner.py`, 평가 러너처럼 점진적으로 복잡해진 모듈을 정리할 때 유용.
+- **적합성**: 점진적으로 복잡해진 토큰 정렬·평가 러너 모듈을 정리할 때 유용.
 
 ### 9. incremental-implementation
 - **요지**: 얇은 수직 슬라이스로 구현 → 테스트 → 검증 → 커밋 반복. 한 번에 ~100줄 이상 작성 전 멈추기.

@@ -73,3 +73,7 @@ build-backend = "hatchling.build"
 - `.pth` 방식이 기본이라 런타임 오버헤드 사실상 0, 정적 분석기 호환.
 - `[tool.uv] package = true` 는 `[build-system]` 이 있으면 생략 가능.
 - `dev-mode-exact = true` 는 IDE 호환성 때문에 권장하지 않는다.
+
+## 인용하는 위키 페이지
+
+- `concepts/src-layout-packaging.md` — editable install 메커니즘과 `src` 레이아웃 운영 원리

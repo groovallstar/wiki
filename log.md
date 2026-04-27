@@ -2,6 +2,12 @@
 
 인제스트·린트 이력의 시간순 append-only 로그.
 
+## [2026-04-27] lint | 수록 원칙·역참조 정합성 점검
+- `concepts/agent-skills.md`: 호스트 저장소 파일명 1건 일반화, `docs/schema.md` → `schema.md` 경로 정정.
+- `sources/env/python-editable-install-research.md`: 누락됐던 `## 인용하는 위키 페이지` 역참조 섹션 추가 (`concepts/src-layout-packaging.md`).
+- `sources/dev/epril-2026-session-context-handoff.md`: 간접 참조였던 `concepts/token-management.md` 줄 삭제 (실제 직접 인용은 `concepts/session-handoff.md` 한 곳).
+- 잔여 이슈: `concepts/agent-skills.md` 템플릿 구조(개요/핵심 원칙/...) 미준수는 정보 카테고리로 미수정 (콘텐츠 성격상 강제 불요).
+
 ## [2026-04-24] ingest | 세션 컨텍스트 핸드오프 4계층 전략
 - `sources/dev/epril-2026-session-context-handoff.md` 신규 (정도현 2026-04-23 원문 요약).
 - `concepts/session-handoff.md` 신규 (4계층 전략 · Handoff 문서 필수 섹션 · Registry 패턴 · 안티패턴).

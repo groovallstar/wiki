@@ -103,4 +103,3 @@ Anthropic 공식 가이드는 "새 task는 새 세션" 휴리스틱을 기본으
 ## 인용하는 위키 페이지
 
 - `concepts/session-handoff.md` — 본 글의 4계층 전략을 프로젝트 독립 방법론으로 정제
-- `concepts/token-management.md` — `/clear`·`/compact`·Handoff 개념 한 줄 소개 후 본 소스와 연결

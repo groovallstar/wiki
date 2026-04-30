@@ -2,6 +2,13 @@
 
 인제스트·린트 이력의 시간순 append-only 로그.
 
+## [2026-04-30] ingest | Ubiquitous Language (DDD)
+- `sources/dev/evans-2003-ddd.md` 신규 (Evans 2003 DDD 원서 요약).
+- `sources/dev/pocock-2026-skills.md` 신규 (mattpocock/skills 카탈로그, `grill-with-docs` 4단계 정식화).
+- `concepts/ubiquitous-language.md` 신규 (사용자·개발자 어휘 통일 = 번역 비용 0; Pocock 운용 절차 인용).
+- `index.md` concepts/sources 카탈로그 갱신.
+- 결정 근거: mattpocock/skills 검토 시 옵션 (b) 채택 — 카탈로그 비교 페이지(`agent-skills.md` 비대화) 회피, DDD 일반 도메인 지식 1페이지만 신설. NER 응용 예시는 프로젝트 독립성 원칙으로 제외. §출처는 schema §페이지 템플릿에 따라 `sources/` 포인터로만 표기, 외부 URL 은 source 파일 메타에만.
+
 ## [2026-04-27] lint | 수록 원칙·역참조 정합성 점검
 - `concepts/agent-skills.md`: 호스트 저장소 파일명 1건 일반화, `docs/schema.md` → `schema.md` 경로 정정.
 - `sources/env/python-editable-install-research.md`: 누락됐던 `## 인용하는 위키 페이지` 역참조 섹션 추가 (`concepts/src-layout-packaging.md`).

@@ -11,6 +11,7 @@
 - `concepts/token-management.md` — LLM 컨텍스트 토큰 운영 전략
 - `concepts/session-handoff.md` — 세션 전환 시 맥락 유실을 막는 4계층 핸드오프 전략
 - `concepts/src-layout-packaging.md` — Python src-layout 과 editable install
+- `concepts/ubiquitous-language.md` — 사용자·개발자 어휘 통일로 번역 비용을 제거하는 DDD 원칙
 
 ## Sources
 
@@ -35,5 +36,7 @@
 ### `dev/` — 개발 도구·에이전트
 
 - `sources/dev/addyosmani-agent-skills.md` — Addy Osmani 의 Agent Skills 논의
+- `sources/dev/evans-2003-ddd.md` — DDD 원서, ubiquitous language 정의의 1차 출처
+- `sources/dev/pocock-2026-skills.md` — Matt Pocock 의 Skills For Real Engineers 카탈로그
 - `sources/dev/jeong-2026-vibe-coding-token-management.md` — vibe coding 맥락의 토큰 관리
 - `sources/dev/epril-2026-session-context-handoff.md` — 세션 간 컨텍스트 핸드오프 4계층 전략

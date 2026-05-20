@@ -2,6 +2,10 @@
 
 인제스트·린트 이력의 시간순 append-only 로그.
 
+## [2026-05-20] lint | token-management `.claudeignore` 사실 정정
+- `concepts/token-management.md` §1: `.claudeignore`(현행 Claude Code 미구현)를 작동 기제 `permissions.deny`(`.claude/settings.json`)로 정정. 원칙은 유지, 원문 주장과의 불일치를 검증 메모로 명시(모순 진술 회피). 웹 검증 근거: open issue #579/#29455/#30810/#36163.
+- 잔여 이슈(사용자 보류): `concepts/agent-skills.md` 신규 3개(doubt-driven-development, git-workflow-and-versioning, interview-me) 미평가. 카탈로그 20→23 증가, 기존 20개는 개명·삭제 없음.
+
 ## [2026-05-20] ingest | 데이터 분리·평가 설계
 - `concepts/data-splitting.md` 신규 (train/dev/test·train-dev 4분할·IID vs OOD·분포 시프트 3유형·temporal/walk-forward·adaptive overfitting 이론 vs 실증·지표 선택 연결).
 - `sources/ner/` 에 핵심 6건 신규: ng-2018-ml-yearning, quinonero-candela-2009-dataset-shift, recht-2019-imagenet-generalize, dwork-2015-reusable-holdout, bergmeir-benitez-2012-timeseries-cv, koh-2021-wilds.

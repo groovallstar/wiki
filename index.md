@@ -5,6 +5,7 @@
 ## Concepts
 
 - `concepts/bio-tagging.md` — BIO/IOB 태그 체계와 토큰 단위별 Span 변환
+- `concepts/data-splitting.md` — train/dev/test·train-dev·OOD·temporal 분할과 평가 설계
 - `concepts/inter-annotator-agreement.md` — 라벨러 합의도(κ 계열)와 NER/LLM 맥락 응용
 - `concepts/kb-anchor-verification.md` — 외부 지식 베이스를 앵커로 삼은 라벨 독립 검증
 - `concepts/agent-skills.md` — Claude Code 의 Agent Skills 운영 패턴
@@ -23,6 +24,12 @@
 - `sources/ner/park-2021-klue.md` — 한국어 KLUE 벤치마크(음절 단위 NER 사례)
 - `sources/ner/pan-2017-wikiann.md` — WikiANN 다국어 silver NER 구축
 - `sources/ner/kmou-ner-dataset.md` — 한국해양대 NER 데이터셋(형태소 단위 + 비표준 BIO)
+- `sources/ner/ng-2018-ml-yearning.md` — train/dev/test·train-dev 4분할·optimizing/satisficing 지표
+- `sources/ner/quinonero-candela-2009-dataset-shift.md` — dataset shift 정식화(covariate/prior/concept)
+- `sources/ner/recht-2019-imagenet-generalize.md` — 새 테스트셋 일반화·adaptive overfitting 실증
+- `sources/ner/dwork-2015-reusable-holdout.md` — adaptive data analysis·holdout 재사용 타당성
+- `sources/ner/bergmeir-benitez-2012-timeseries-cv.md` — 시계열 CV vs walk-forward(OOS) 평가
+- `sources/ner/koh-2021-wilds.md` — 실세계 분포 시프트 OOD 벤치마크
 
 ### `labeling/` — 라벨링 품질 평가·검증
 

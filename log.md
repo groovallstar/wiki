@@ -2,6 +2,13 @@
 
 인제스트·린트 이력의 시간순 append-only 로그.
 
+## [2026-05-20] ingest | 데이터 분리·평가 설계
+- `concepts/data-splitting.md` 신규 (train/dev/test·train-dev 4분할·IID vs OOD·분포 시프트 3유형·temporal/walk-forward·adaptive overfitting 이론 vs 실증·지표 선택 연결).
+- `sources/ner/` 에 핵심 6건 신규: ng-2018-ml-yearning, quinonero-candela-2009-dataset-shift, recht-2019-imagenet-generalize, dwork-2015-reusable-holdout, bergmeir-benitez-2012-timeseries-cv, koh-2021-wilds.
+- 6 sources ↔ `concepts/data-splitting.md` 양방향 교차 참조 확립. `concepts/inter-annotator-agreement.md`(평가 천장 기준자)로 발신 링크.
+- `index.md` concepts/sources 카탈로그 갱신.
+- 결정 근거: 사용자 지정으로 방법론 핵심 6건만 ingest(NER 엔티티-중복 특화 3건 보류), 신규 `evaluation/` topic 대신 `sources/ner/` 배치. 통합 1페이지 입도 채택(데이터 분리 단일 주제). Recht(실증)와 Dwork(이론)의 adaptive overfitting 결론 차이를 본문에 병기. NER 특화 lexical-overlap 분할은 전용 출처 후속 ingest 대상으로 메모만.
+
 ## [2026-04-30] ingest | Ubiquitous Language (DDD)
 - `sources/dev/evans-2003-ddd.md` 신규 (Evans 2003 DDD 원서 요약).
 - `sources/dev/pocock-2026-skills.md` 신규 (mattpocock/skills 카탈로그, `grill-with-docs` 4단계 정식화).

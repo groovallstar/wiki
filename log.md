@@ -2,6 +2,21 @@
 
 인제스트·린트 이력의 시간순 append-only 로그.
 
+## [2026-06-05] query-filed | 서브에이전트마다 별도 LLM 모델이 필요한가
+- `concepts/agentic-data-generation.md` §3에 "역할 ≠ 모델 수" 단락 추가. 핵심: 4개는 역할이지 모델 인스턴스가 아니며(원 실험은 orchestrator·challenger·judge 한 모델 공유, 4+역할을 2종으로 운영), 공유 정책은 역할별로 비대칭 — solver 쌍은 *상관*(격차=난이도 측정), verifier/judge 는 *독립*(자기 심판 회피). IAA·kb-anchor 로 발신 링크.
+
+## [2026-06-05] lint | Autodata ingest 직후 전수 점검
+- 끊어진 링크 0 / 고아 페이지 0 / source 미인용 concept 0 / 모순·낡은 주장 0.
+- 수록 원칙: 검사 히트(`my_package`·`src/foo`·`__init__.py`·`PYTHONPATH=...`)는 전부 `concepts/src-layout-packaging.md`·`sources/env/python-editable-install-research.md`의 일반 예시 — 호스트 저장소(`src/ner`) 누출 아님, 오탐 처리.
+- 수정 1건: `sources/labeling/kulikov-2026-autodata.md` "인용하는 위키 페이지"가 실제 인용 않는 concept 3개를 나열(직전 ingest 오류) → 직접 인용자(`agentic-data-generation.md`)만 남기고 나머지는 "관련 개념(직접 인용 안 함)" 하위 절로 분리. 관례(vrandecic·cohen=직접 인용자만) 정합.
+
+## [2026-06-05] ingest | Kulikov 2026 Autodata (Agentic Self-Instruct)
+- `concepts/agentic-data-generation.md` 신규 (데이터 과학자 루프 3단계·4역할 Agentic Self-Instruct·난이도 격차 수용 게이트·메타 최적화·보상 해킹 가드레일·기존 합성법 비교).
+- `sources/labeling/kulikov-2026-autodata.md` 신규 (Meta AI RAM 블로그 요약).
+- 양방향 교차 참조: source ↔ 신규 concept. 신규 concept → `kb-anchor-verification`(독립 심판 원리)·`data-splitting`(held-out·Goodhart·adaptive overfitting)·`inter-annotator-agreement`(자동 심판 편향)로 발신. 역방향 보강: `kb-anchor-verification` §8(생성 시점 검증 메모)·`data-splitting` §adaptive overfitting(합성 루프 동형) 에 backlink 추가.
+- `index.md` concepts/sources 카탈로그 갱신.
+- 결정 근거: 새 `data/` topic 대신 `sources/labeling/` 배치(데이터 품질·검증 계열, 신규 topic 임계치 ≥2건 미달). verifier-judge·격차 게이트는 프로젝트의 PII 주입+교차검증 증강과 직접 연결되는 재사용 방법론으로 판단해 concept 승격.
+
 ## [2026-05-20] lint | token-management `.claudeignore` 사실 정정
 - `concepts/token-management.md` §1: `.claudeignore`(현행 Claude Code 미구현)를 작동 기제 `permissions.deny`(`.claude/settings.json`)로 정정. 원칙은 유지, 원문 주장과의 불일치를 검증 메모로 명시(모순 진술 회피). 웹 검증 근거: open issue #579/#29455/#30810/#36163.
 - 잔여 이슈(사용자 보류): `concepts/agent-skills.md` 신규 3개(doubt-driven-development, git-workflow-and-versioning, interview-me) 미평가. 카탈로그 20→23 증가, 기존 20개는 개명·삭제 없음.

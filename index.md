@@ -4,6 +4,7 @@
 
 ## Concepts
 
+- `concepts/agentic-data-generation.md` — 에이전트 기반 합성 데이터 생성(데이터 과학자 루프·난이도 격차 게이트·메타 최적화)
 - `concepts/bio-tagging.md` — BIO/IOB 태그 체계와 토큰 단위별 Span 변환
 - `concepts/data-splitting.md` — train/dev/test·train-dev·OOD·temporal 분할과 평가 설계
 - `concepts/inter-annotator-agreement.md` — 라벨러 합의도(κ 계열)와 NER/LLM 맥락 응용
@@ -35,6 +36,7 @@
 
 - `sources/labeling/cohen-1960-kappa.md` — Cohen's κ 공식의 원조 논문
 - `sources/labeling/vrandecic-2014-wikidata.md` — Wikidata 데이터 모델·P31 원조 논문
+- `sources/labeling/kulikov-2026-autodata.md` — Agentic Self-Instruct 자동 데이터 과학자(난이도 격차 게이트)
 
 ### `env/` — 개발 환경·패키징
 

@@ -83,6 +83,11 @@ variance가 크면 처방은 정칙화·데이터 증가, mismatch가 크면 tra
   않았으며, 분포 시프트가 더 큰 요인일 수 있다.
 - 결론: 둘을 나란히 둔다 — adaptive overfitting은 *방어할 위험*이되,
   관측된 ID/OOD 격차의 1차 설명은 보통 분포 시프트다.
+- **합성 데이터 루프에서의 동형**: held-out 점수에 대고 *데이터 생성 규칙*을
+  반복 조정하면 생성 하네스가 holdout에 adaptive overfitting 한다. 에이전트가
+  격차 지표를 속이는 보상 해킹(solver 프롬프트 조작 등)도 같은 Goodhart 계열
+  실패다 — 최종 판정 세트는 사전 고정하고 드물게 본다
+  (`concepts/agentic-data-generation.md`).
 
 ### 지표 선택과의 연결
 

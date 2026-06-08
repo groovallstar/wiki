@@ -2,6 +2,18 @@
 
 인제스트·린트 이력의 시간순 append-only 로그.
 
+## [2026-06-08] lint | dynamic-workflows ingest 직후 전수 점검
+- 끊어진 링크 0 / 고아 0 / source 미인용 concept 0 / 모순·낡은 주장 0.
+- 수록 원칙 검사 히트는 전부 오탐: `concepts/token-management.md`의 `.claude/settings.json`(Claude Code 일반 설정명, 2026-05-20 정정 시 수용), `concepts/src-layout-packaging.md`의 `/work/my-project`(일반 예시 경로). 호스트 저장소 누출 아님.
+
+## [2026-06-08] ingest | Anthropic 2026 Dynamic Workflows (Claude Code)
+- `concepts/dynamic-workflows.md` 신규 (작업별 하네스·서브에이전트 오케스트레이션·세 실패 모드[게으름·자기편애·목표 표류]·패턴 카탈로그 6종·비교>절대 검증 원리).
+- `concepts/loop-verification-gate.md` 신규 (적대적 검증을 루프 완료 관문으로 구체화: 결정적 선통과→격리 반박자→판정 ground truth, 재진입 비-block·무한루프 차단·캐시 TTL·모델 tier 비용).
+- `sources/dev/anthropic-2026-dynamic-workflows.md` 신규 (Anthropic 블로그 요약).
+- 양방향 교차 참조: source ↔ 신규 concept 2건. 신규 concept → `agentic-data-generation`(verifier/judge 독립=self-preferential bias 대응 동형)·`kb-anchor-verification`(독립 검증) 발신. 역방향 보강: `agentic-data-generation`에 backlink 추가.
+- `index.md` concepts/sources 카탈로그 갱신.
+- 결정 근거: 적용한 검증 게이트는 프로젝트 독립 *방법론*으로만 수록(호스트 경로·스크립트·파일명 제외, 수록 원칙 §1). loop-verification-gate를 dynamic-workflows의 하위 구체화로 분리(개념 단위). dev/ topic 배치(개발 도구·에이전트 계열).
+
 ## [2026-06-05] query-filed | 서브에이전트마다 별도 LLM 모델이 필요한가
 - `concepts/agentic-data-generation.md` §3에 "역할 ≠ 모델 수" 단락 추가. 핵심: 4개는 역할이지 모델 인스턴스가 아니며(원 실험은 orchestrator·challenger·judge 한 모델 공유, 4+역할을 2종으로 운영), 공유 정책은 역할별로 비대칭 — solver 쌍은 *상관*(격차=난이도 측정), verifier/judge 는 *독립*(자기 심판 회피). IAA·kb-anchor 로 발신 링크.
 

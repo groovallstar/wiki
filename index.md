@@ -14,6 +14,8 @@
 - `concepts/session-handoff.md` — 세션 전환 시 맥락 유실을 막는 4계층 핸드오프 전략
 - `concepts/src-layout-packaging.md` — Python src-layout 과 editable install
 - `concepts/ubiquitous-language.md` — 사용자·개발자 어휘 통일로 번역 비용을 제거하는 DDD 원칙
+- `concepts/dynamic-workflows.md` — 작업별 하네스·서브에이전트 오케스트레이션·세 실패 모드와 패턴 카탈로그
+- `concepts/loop-verification-gate.md` — 결정적 선통과+격리 반박자를 루프 완료 관문으로 두는 검증 방법론
 
 ## Sources
 
@@ -49,3 +51,4 @@
 - `sources/dev/pocock-2026-skills.md` — Matt Pocock 의 Skills For Real Engineers 카탈로그
 - `sources/dev/jeong-2026-vibe-coding-token-management.md` — vibe coding 맥락의 토큰 관리
 - `sources/dev/epril-2026-session-context-handoff.md` — 세션 간 컨텍스트 핸드오프 4계층 전략
+- `sources/dev/anthropic-2026-dynamic-workflows.md` — Claude Code 동적 워크플로·하네스 패턴 카탈로그(Anthropic 블로그)

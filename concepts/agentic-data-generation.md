@@ -69,7 +69,9 @@
   강화에 반응하는 정도"를 깨끗이 잰다(크기 차이로 격차를 키우는 건 선택).
 - *verifier/judge*는 **독립**이 유리하다 — 생성자와 같은 모델이면 편향을 공유해
   자기 심판이 된다(`concepts/inter-annotator-agreement.md`,
-  `concepts/kb-anchor-verification.md`).
+  `concepts/kb-anchor-verification.md`). 이 "검증자는 생성자와 분리" 원리는
+  `concepts/dynamic-workflows.md` 의 self-preferential bias 대응,
+  `concepts/loop-verification-gate.md` 의 격리 컨텍스트 반박자와 동형이다.
 
 ## 4. 난이도 격차 기반 수용 기준
 

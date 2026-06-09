@@ -67,8 +67,7 @@
 
 1. **즉시 도입**: TDD, debugging-and-error-recovery — 기존 원칙과 100% 정렬, 런타임 비용 없음.
 2. **다음 중간 규모 작업에 시범 적용**: spec-driven-development + planning-and-task-breakdown + incremental-implementation 세트.
-3. **문서 체계 확장**: `docs/decisions/` 디렉터리 신설 후 ADR 템플릿 도입 (documentation-and-adrs).
-4. **참조용 체크리스트로 보관**: code-review-and-quality, code-simplification, performance-optimization — 작업 트리거 시 스킬 원문 참조.
+3. **참조용 체크리스트로 보관**: code-review-and-quality, code-simplification, performance-optimization — 작업 트리거 시 스킬 원문 참조.
 
 ## 제외된 스킬 (참고)
 

@@ -2,6 +2,11 @@
 
 인제스트·린트 이력의 시간순 append-only 로그.
 
+## [2026-06-12] lint | agent-skills ADR 권고 제거
+- `concepts/agent-skills.md` §4 documentation-and-adrs 삭제: ADR(`docs/decisions/NNNN-*.md`) *생성*을 지시하는 운영 가드레일이라 프로젝트 독립 위키가 담을 내용이 아니고, 현 프로젝트의 ADR 폐지와도 어긋났음(삭제된 `docs/decisions/`를 재생성시킬 떠다니는 지시문). 보조 스킬 번호 5~9 → 4~8 재정렬.
+- `sources/dev/addyosmani-agent-skills.md` 카탈로그 목록의 `documentation-and-adrs`는 상류 저장소 실재 항목이라 유지(사실 보고).
+- 그 외 축 직전 점검과 동일: 끊어진 링크 0·고아 0·source 미인용 0·역링크 불일치 0. 잔여: `schema.md` 예시 블록의 pre-reorg 경로 1건(무해, 미수정).
+
 ## [2026-06-08] lint | dynamic-workflows ingest 직후 전수 점검
 - 끊어진 링크 0 / 고아 0 / source 미인용 concept 0 / 모순·낡은 주장 0.
 - 수록 원칙 검사 히트는 전부 오탐: `concepts/token-management.md`의 `.claude/settings.json`(Claude Code 일반 설정명, 2026-05-20 정정 시 수용), `concepts/src-layout-packaging.md`의 `/work/my-project`(일반 예시 경로). 호스트 저장소 누출 아님.

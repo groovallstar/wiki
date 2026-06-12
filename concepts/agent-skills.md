@@ -29,35 +29,28 @@
   - NLP 파이프라인에서 병목은 측정 없이 예측하기 어렵다.
 - **유의**: 이 스킬은 Core Web Vitals(웹 프론트엔드) 예시가 포함되어 있으나 방법론(측정 우선)은 그대로 적용 가능. 웹 지표 부분은 무시.
 
-### 4. documentation-and-adrs
-- **요지**: 코드는 *무엇*을, 문서는 *왜*를 남긴다. 중요한 기술 결정은 ADR(`docs/decisions/NNNN-*.md`)로 순번을 매겨 기록.
-- **적용 근거**:
-  - 문서 스키마가 확립된 프로젝트에서 ADR을 추가하면 기술 결정 맥락을 장기 보존할 수 있음.
-  - "왜 이 라이브러리인가", "왜 이 평가 전략인가" 같은 결정은 코드에 드러나지 않는다.
-- **적용 포인트**: 스키마 변경, 백엔드 교체, 평가 지표 변경 시 ADR 생성.
-
 ---
 
 ## 보조 (Nice to Have)
 
-### 5. spec-driven-development
+### 4. spec-driven-development
 - **요지**: 코드 전에 사양 작성. SPECIFY → PLAN → TASKS → IMPLEMENT 4단계 게이트, 단계마다 사람 검토.
 - **적합성**: `CLAUDE.md`의 "Human-Led Decomposition" 원칙과 맞음. 새 언어 추가(예: 베트남어 라벨러) 같은 중간 규모 기능에 유용.
 - **주의**: 단일 파일 수정/오타 수정에는 과도.
 
-### 6. planning-and-task-breakdown
+### 5. planning-and-task-breakdown
 - **요지**: 스펙을 검증 가능한 작은 태스크로 분해. 의존성 그래프, 인수 기준, 병렬화 가능성까지 명시.
 - **적합성**: "원자적 기능 단위" 원칙의 실행 도구로 사용 가능. 데이터셋 추가 + 라벨러 + 평가 파이프라인 같은 다단계 작업에 적합.
 
-### 7. code-review-and-quality
+### 6. code-review-and-quality
 - **요지**: 5축 리뷰 — 정확성, 가독성, 아키텍처, 보안, 성능. 승인 기준은 "완벽"이 아니라 "코드 상태를 분명히 개선하는가".
 - **적합성**: PR/머지 전 체크리스트로 사용. OMC의 `code-reviewer` 에이전트 역할과 중복되므로 기준 문서로만 참조해도 충분.
 
-### 8. code-simplification
+### 7. code-simplification
 - **요지**: 동작을 정확히 보존하면서 가독성을 높이는 리팩터링. "줄 수 감소"가 아닌 "이해 속도 향상"이 목표.
 - **적합성**: 점진적으로 복잡해진 토큰 정렬·평가 러너 모듈을 정리할 때 유용.
 
-### 9. incremental-implementation
+### 8. incremental-implementation
 - **요지**: 얇은 수직 슬라이스로 구현 → 테스트 → 검증 → 커밋 반복. 한 번에 ~100줄 이상 작성 전 멈추기.
 - **적합성**: "Atomic Functionality" 원칙의 실행 패턴. 신규 라벨러/평가 지표 추가 시 기본 리듬.
 

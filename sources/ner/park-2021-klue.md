@@ -11,12 +11,12 @@
 
 한국어 NLU 종합 벤치마크(KLUE)를 제안. 8개 태스크 — Topic Classification, Semantic Textual Similarity, NLI, **Named Entity Recognition (KLUE-NER)**, Relation Extraction, Dependency Parsing, MRC, Dialogue State Tracking — 와 함께 KLUE-BERT / KLUE-RoBERTa 사전학습 모델을 공개.
 
-## NER 부분 (본 프로젝트 관점)
+## NER 부분
 
 - **태그 체계**: 6종 — `PS`(Person), `LC`(Location), `OG`(Organization), `DT`(Date), `TI`(Time), `QT`(Quantity)
 - **토큰화 단위**: **음절 단위(syllable-level)** + 공백 토큰 — 이는 본 위키의 `concepts/bio-tagging.md` §2(음절/어절/형태소)와 §4.2 처리 단계의 직접 근거.
 - **데이터 출처**: 위키트리 뉴스 + 에어비앤비 리뷰 등.
-- 음절 단위 태깅이라 조사 분리가 가능하다는 특성이 본 파이프라인의 span 변환 로직(`extract_spans_from_bio`, `joiner=""`) 설계에 반영되어 있음.
+- 음절 단위 태깅은 조사 분리가 가능해, 공백 없는 언어에서 span을 joiner 없이 이어붙이는 경계 설계의 직접 근거가 된다(→ `concepts/bio-tagging.md` §4).
 
 ## 인용하는 위키 페이지
 

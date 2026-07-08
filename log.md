@@ -2,6 +2,19 @@
 
 인제스트·린트 이력의 시간순 append-only 로그.
 
+## [2026-07-08] lint | 수록 원칙 누출 전면 정리 (Sonnet 서브에이전트 4개 병렬 점검)
+- 전 38개 페이지 6축 점검. 구조축(끊어진 링크·고아·미인용 concept·역링크 비대칭·index 누락) 전부 0건, 낡은 주장 0건.
+- **수록 원칙(프로젝트 독립성) 위반 5개 파일 수정**: 호스트 실제 함수명 `extract_spans_from_bio` 4곳(`bio-tagging.md` 2·`sources/ner/kmou`·`sources/ner/park`) → "표준 BIO→span 변환기"로 일반화. "(본 프로젝트 관점)" 절 제목 3곳(`kmou`·`park`·`pan`) 재작성, 호스트 구현 세부(`joiner=""`·KLUE `PS`/`LC`/`OG` 매핑 프레이밍) 언어중립 이론으로 환원. `agent-skills.md` 호스트 `CLAUDE.md` 원칙명·"베트남어 라벨러" 구체 참조 일반화.
+- **경미 3건**: `context-engineering.md` bare 파일명 링크 7곳 → `concepts/` 접두어. 60%(품질 저하 시작)↔70%(정리 트리거) 갭 미설명 → `token-management.md`에 인과 한 줄 보강. `inter-annotator-agreement.md` substantial 하한 0.60→0.61(Landis-Koch 스케일 정합).
+- **미수정(설계상 정당)**: 소스 템플릿 필드명 이탈(`**매체**`·주제별 절 제목·GitHub 카탈로그 저자/연도 부재)은 논문 템플릿을 데이터셋·카탈로그에 글자강제하면 정보 손실이라 보류. 개념 번호-TOC 스타일도 schema 비강제.
+
+## [2026-07-08] ingest | 김상국 2026 컨텍스트 엔지니어링 (우아한형제들)
+- `concepts/context-engineering.md` 신규 (LLM 읽기 3기제[관련도 어텐션·lost-in-the-middle·유한 윈도우]·저술 Do/Don't 11항·가이드라인 vs 하네스·모델 세대별 조정·아첨/확률성 대응).
+- `sources/dev/kim-2026-context-engineering.md` 신규 (원문 요약).
+- 교차 참조: source ↔ 신규 concept. 신규 concept → `dynamic-workflows`(하네스의 오케스트레이션 자매 층)·`token-management`(전술 구체화)·`session-handoff`(lost-in-the-middle=context rot)·`bio-tagging`(few-shot=형식 고정 인스턴스) 발신. 역방향 backlink: `dynamic-workflows` §관련 개념·`token-management` §관련 개념(신설)·`session-handoff` §개요·`bio-tagging` §1.2에 추가.
+- `index.md` concepts/sources 카탈로그 갱신.
+- 결정 근거: token-management(운영 전술)·dynamic-workflows(오케스트레이션)와 구분되는 *인지 원리+저술* 레이어라 신규 concept 승격(현 12→13, 임계 15 미만). 하네스 두 용법(프롬프트 층 vs 오케스트레이션 층)을 층위로 구분해 상보 배치. dev/ topic(개발·에이전트 계열).
+
 ## [2026-06-12] lint | agent-skills ADR 권고 제거
 - `concepts/agent-skills.md` §4 documentation-and-adrs 삭제: ADR(`docs/decisions/NNNN-*.md`) *생성*을 지시하는 운영 가드레일이라 프로젝트 독립 위키가 담을 내용이 아니고, 현 프로젝트의 ADR 폐지와도 어긋났음(삭제된 `docs/decisions/`를 재생성시킬 떠다니는 지시문). 보조 스킬 번호 5~9 → 4~8 재정렬.
 - `sources/dev/addyosmani-agent-skills.md` 카탈로그 목록의 `documentation-and-adrs`는 상류 저장소 실재 항목이라 유지(사실 보고).

@@ -8,7 +8,7 @@ LLM 코딩 에이전트(Claude Code 등)는 세션이 바뀌면 "어제의 결�
 
 세 가지 문제를 동시에 다뤄야 한다:
 
-- **Context rot** — 긴 컨텍스트에서 중간 정보가 덜 참조되는 "lost in the middle". 경험칙상 60% 사용률 근처에서 품질 저하.
+- **Context rot** — 긴 컨텍스트에서 중간 정보가 덜 참조되는 "lost in the middle"(기제는 `concepts/context-engineering.md`). 경험칙상 60% 사용률 근처에서 품질 저하.
 - **Auto-compact 비대칭성** — 요약이 *가장 덜 똑똑한 순간*에 발동해 다음 턴에 필요한 맥락을 잘라낸다.
 - **Context amnesia** — 새 세션은 백지. 규약 문서는 "규칙"은 잇지만 "어제 왜 그 접근을 폐기했는지"는 잇지 못한다.
 

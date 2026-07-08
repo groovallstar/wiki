@@ -35,7 +35,7 @@
 
 ### 4. spec-driven-development
 - **요지**: 코드 전에 사양 작성. SPECIFY → PLAN → TASKS → IMPLEMENT 4단계 게이트, 단계마다 사람 검토.
-- **적합성**: `CLAUDE.md`의 "Human-Led Decomposition" 원칙과 맞음. 새 언어 추가(예: 베트남어 라벨러) 같은 중간 규모 기능에 유용.
+- **적합성**: "사람 주도 분해(Human-Led Decomposition)" 원칙과 맞음. 새 언어 추가 같은 중간 규모 기능에 유용.
 - **주의**: 단일 파일 수정/오타 수정에는 과도.
 
 ### 5. planning-and-task-breakdown

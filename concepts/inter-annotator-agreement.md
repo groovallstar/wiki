@@ -93,7 +93,7 @@ NER 토큰 레이블은 이 함정의 교과서 사례다:
 | 상황 | κ 목표 |
 |---|---|
 | 데이터셋 릴리스 (Gold) | ≥ 0.80 |
-| 연구용 silver | ≥ 0.60 (substantial) |
+| 연구용 silver | ≥ 0.61 (substantial) |
 | 탐색적 prototyping | 명확한 기준 없음, 방향성만 |
 
 ## 6. 관련 지표 — Fleiss, Krippendorff, Gwet

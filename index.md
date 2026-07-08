@@ -16,6 +16,7 @@
 - `concepts/ubiquitous-language.md` — 사용자·개발자 어휘 통일로 번역 비용을 제거하는 DDD 원칙
 - `concepts/dynamic-workflows.md` — 작업별 하네스·서브에이전트 오케스트레이션·세 실패 모드와 패턴 카탈로그
 - `concepts/loop-verification-gate.md` — 결정적 선통과+격리 반박자를 루프 완료 관문으로 두는 검증 방법론
+- `concepts/context-engineering.md` — LLM 읽기 3기제(관련도 어텐션·lost-in-the-middle·유한 윈도우)와 컨텍스트 조성 저술 원리(Do/Don't·가이드라인 vs 하네스)
 
 ## Sources
 
@@ -52,3 +53,4 @@
 - `sources/dev/jeong-2026-vibe-coding-token-management.md` — vibe coding 맥락의 토큰 관리
 - `sources/dev/epril-2026-session-context-handoff.md` — 세션 간 컨텍스트 핸드오프 4계층 전략
 - `sources/dev/anthropic-2026-dynamic-workflows.md` — Claude Code 동적 워크플로·하네스 패턴 카탈로그(Anthropic 블로그)
+- `sources/dev/kim-2026-context-engineering.md` — 컨텍스트 엔지니어링 원리(어텐션·lost-in-the-middle)와 Do/Don't (우아한형제들 기술블로그)

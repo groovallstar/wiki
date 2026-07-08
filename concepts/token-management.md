@@ -46,7 +46,7 @@ Claude Code, Codex, Gemini 같은 도구 사용 시 응답 지연, 규칙 망각
 **사용 타이밍:**
 - 디버깅 세션 완료 후
 - 하나의 기능 구현 완료 후
-- 컨텍스트 사용량 70% 도달 시
+- 컨텍스트 사용량 70% 도달 시 — 품질 저하는 60% 근처부터 시작되므로(`concepts/session-handoff.md`), 저하가 누적되기 전 여유를 두고 정리한다
 
 **철학**: 긴 세션 유지보다 "짧게 끊고 재시작"하는 능력이 중요하다.
 
@@ -213,3 +213,7 @@ AI 도구마다 강점이 다르므로 역할을 분리한다:
 ## 출처
 
 - `sources/dev/jeong-2026-vibe-coding-token-management.md` — 원문 요약 및 11가지 전략 상세
+
+## 관련 개념
+
+- `concepts/context-engineering.md` — 이 전술들이 딛고 선 인지 원리(어텐션 관련도·lost-in-the-middle·유한 윈도우).

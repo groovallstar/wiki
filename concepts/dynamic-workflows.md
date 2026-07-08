@@ -43,3 +43,4 @@
 
 - `concepts/loop-verification-gate.md` — adversarial verification 패턴을 루프 완료 관문으로 구체화한 방법론.
 - `concepts/agentic-data-generation.md` — verifier/judge 독립성(자기 심판 회피)이 self-preferential bias 대응과 동형.
+- `concepts/context-engineering.md` — 하네스의 *프롬프트 저술* 층(성공 기준·검증·중단 조건). 여기의 오케스트레이션 층과 상보.

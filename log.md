@@ -2,6 +2,13 @@
 
 인제스트·린트 이력의 시간순 append-only 로그.
 
+## [2026-07-24] ingest | Kwok 2026 LLM-as-a-Verifier
+- `concepts/verifier-score-resolution.md` 신규 (연속 점수=로짓 기댓값·세 해상도 축[값 G/통계 K/기준 C]·이산 판사 tie 실패 모드·명목 κ↔연속 α 이동·로짓 접근 전제).
+- `sources/labeling/kwok-2026-llm-as-verifier.md` 신규 (arXiv preprint 요약; 원문 HTML 2회 독립 대조로 Eq.3.1·헤드라인 4수치·tie 26.7%@k=1·한계 3종 확정).
+- 양방향 교차 참조: source ↔ 신규 concept. 신규 concept → `loop-verification-gate`(직교 축: 누가/어디서 vs 얼마나 세밀)·`inter-annotator-agreement`(연속화 시 κ→α/ICC)·`agentic-data-generation`(judge 신호 해상도)로 발신. 역방향 보강: 세 페이지 각각에 backlink 추가.
+- `index.md` concepts/sources 카탈로그 갱신.
+- 결정 근거: 위키의 공백이 "심판이 *누가*(독립성)"는 3개 페이지에 있으나 "*어떻게* 채점하나(신호 해상도)"가 부재 → 그 자리를 채우는 concept 승격(사용자 승인). 프로젝트 독립성 원칙으로 호스트 적용(재라벨 병합 정책 등)은 위키 제외, 일반 방법론만 수록. preprint 미검증이라 프레이밍·수치는 "저자 보고"로 표기, 로짓 전제 없이 성립하는 K·C 는 재사용 가치로 강조. `sources/labeling/` 배치(kulikov autodata 옆, 검증·데이터 품질 계열).
+
 ## [2026-07-08] lint | 수록 원칙 누출 전면 정리 (Sonnet 서브에이전트 4개 병렬 점검)
 - 전 38개 페이지 6축 점검. 구조축(끊어진 링크·고아·미인용 concept·역링크 비대칭·index 누락) 전부 0건, 낡은 주장 0건.
 - **수록 원칙(프로젝트 독립성) 위반 5개 파일 수정**: 호스트 실제 함수명 `extract_spans_from_bio` 4곳(`bio-tagging.md` 2·`sources/ner/kmou`·`sources/ner/park`) → "표준 BIO→span 변환기"로 일반화. "(본 프로젝트 관점)" 절 제목 3곳(`kmou`·`park`·`pan`) 재작성, 호스트 구현 세부(`joiner=""`·KLUE `PS`/`LC`/`OG` 매핑 프레이밍) 언어중립 이론으로 환원. `agent-skills.md` 호스트 `CLAUDE.md` 원칙명·"베트남어 라벨러" 구체 참조 일반화.

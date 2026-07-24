@@ -17,6 +17,7 @@
 - `concepts/dynamic-workflows.md` — 작업별 하네스·서브에이전트 오케스트레이션·세 실패 모드와 패턴 카탈로그
 - `concepts/loop-verification-gate.md` — 결정적 선통과+격리 반박자를 루프 완료 관문으로 두는 검증 방법론
 - `concepts/context-engineering.md` — LLM 읽기 3기제(관련도 어텐션·lost-in-the-middle·유한 윈도우)와 컨텍스트 조성 저술 원리(Do/Don't·가이드라인 vs 하네스)
+- `concepts/verifier-score-resolution.md` — LLM 심판 판정을 연속 점수로 다뤄 값·통계·기준 세 축으로 해상도를 높이는 검증 방법론
 
 ## Sources
 
@@ -40,6 +41,7 @@
 - `sources/labeling/cohen-1960-kappa.md` — Cohen's κ 공식의 원조 논문
 - `sources/labeling/vrandecic-2014-wikidata.md` — Wikidata 데이터 모델·P31 원조 논문
 - `sources/labeling/kulikov-2026-autodata.md` — Agentic Self-Instruct 자동 데이터 과학자(난이도 격차 게이트)
+- `sources/labeling/kwok-2026-llm-as-verifier.md` — LLM-as-a-Verifier: 로짓 기댓값 연속 점수·세 스케일링 축(preprint)
 
 ### `env/` — 개발 환경·패키징
 

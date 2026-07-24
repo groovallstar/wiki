@@ -41,3 +41,4 @@
 - `concepts/dynamic-workflows.md` — 상위 방법론(이 게이트가 구체화하는 패턴의 출처).
 - `concepts/agentic-data-generation.md` — verifier/judge 독립성(자기 심판 회피)과 동일 원리.
 - `concepts/kb-anchor-verification.md` — 독립 앵커 기반 라벨-독립 검증과 정신적 동형.
+- `concepts/verifier-score-resolution.md` — 직교 축. 이 게이트는 *누가/어디서* 검증하나(독립성·배치)를, 저 페이지는 반박자가 내는 *판정 신호가 얼마나 세밀한가*를 다룬다. 비교 판정("재실행 결과가 보고값과 같은가")도 이산이면 tie 에 걸릴 수 있다.

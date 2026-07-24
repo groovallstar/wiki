@@ -72,6 +72,9 @@
   `concepts/kb-anchor-verification.md`). 이 "검증자는 생성자와 분리" 원리는
   `concepts/dynamic-workflows.md` 의 self-preferential bias 대응,
   `concepts/loop-verification-gate.md` 의 격리 컨텍스트 반박자와 동형이다.
+  독립성은 *누가* 채점하나의 축이고, judge 가 루브릭 점수를 *얼마나 세밀하게*
+  내느냐는 직교하는 별도 축이다 — 이산 점수는 후보 간 동점(tie)으로 변별을
+  잃으므로 연속화·반복·기준 분해로 해상도를 올린다(`concepts/verifier-score-resolution.md`).
 
 ## 4. 난이도 격차 기반 수용 기준
 

@@ -48,7 +48,9 @@ git submodule update --init --recursive
 
 ## 운영 스킬 (`docwiki`)
 
-이 위키는 `.claude/skills/docwiki/SKILL.md` 스킬로 운영된다. 아래 트리거 키워드가 감지되면 Claude Code가 스킬을 자동 호출해 `schema.md` 규칙대로 작업한다.
+이 위키는 전역 스킬 `~/.claude/skills/docwiki/SKILL.md` 로 운영된다. 아래 트리거 키워드가 감지되면 Claude Code가 스킬을 자동 호출해 `schema.md` 규칙대로 작업한다.
+
+**스킬을 호스트 저장소가 아니라 전역에 두는 것은 이 위키를 여러 저장소가 submodule 로 공유하기 때문이다.** 저장소마다 `.claude/skills/` 에 사본을 두면 한쪽만 고쳐진 사본이 같은 위키를 다른 규칙으로 운영하게 된다. 한 벌만 두면 그 갈라짐이 생길 자리가 없다.
 
 | 작업 | 트리거 키워드 예시 | 동작 요약 |
 |------|--------------------|-----------|
@@ -59,7 +61,7 @@ git submodule update --init --recursive
 ### 설계 메모
 
 - 스킬은 **키워드 트리거**로 호출된다. 일반 프롬프트에서는 위키를 자동 참조하지 않는다 — 필요할 때만 읽는다.
-- 스킬 본체는 `.claude/skills/docwiki/SKILL.md`, 데이터 규칙은 `schema.md`, 상위 규칙은 저장소 루트의 `CLAUDE.md §Wiki 운영`. 세 곳 모두 schema 우선 원칙으로 정합성을 유지한다.
+- 스킬 본체는 전역 `~/.claude/skills/docwiki/SKILL.md`, 데이터 규칙은 `schema.md`, 상위 규칙은 각 호스트 저장소의 `CLAUDE.md` 중 위키를 언급하는 절. 세 곳 모두 schema 우선 원칙으로 정합성을 유지한다.
 - OMC의 범용 `wiki` 스킬(`.omc/wiki/` 대상)과는 별개 시스템이다. 섞지 않는다.
 
 ## 참고

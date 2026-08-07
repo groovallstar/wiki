@@ -23,7 +23,7 @@ wiki/
 ├── sources/          # 원문 소스 계층 (topic-grouped)
 │   ├── <topic>/      # 예: ner/, labeling/, env/, dev/
 │   └── ...
-├── index.md          # (선택) 전체 페이지 카탈로그
+├── index.md          # 전체 페이지 카탈로그 (Ingest마다 갱신)
 └── log.md            # (선택) 인제스트·린트 로그
 ```
 
@@ -141,9 +141,9 @@ LLM-Wiki의 세 가지 핵심 작업이다. 각각 트리거와 절차가 정해
 - `concepts/<file>.md`
 ```
 
-### (선택) `index.md`
+### `index.md`
 
-전체 페이지 카탈로그. 임베딩 없이도 LLM이 관련 페이지를 빠르게 찾도록 돕는다.
+전체 페이지 카탈로그. 임베딩 없이도 LLM이 관련 페이지를 빠르게 찾도록 돕는다. Ingest마다 갱신한다 (§디렉토리 구조).
 
 ```markdown
 # Index
@@ -175,7 +175,7 @@ LLM-Wiki의 세 가지 핵심 작업이다. 각각 트리거와 절차가 정해
 # Log
 
 ## [2026-04-13] ingest | addyosmani/agent-skills
-- concepts/agent-skills.md 생성, sources/addyosmani-agent-skills.md 작성
+- concepts/agent-skills.md 생성, sources/dev/addyosmani-agent-skills.md 작성
 ## [2026-04-13] lint | bio-tagging
 - 끊어진 참조 1건 수정
 ## [2026-04-14] query-filed | BIO vs IOB2 선택 근거

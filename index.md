@@ -9,7 +9,7 @@
 - `concepts/data-splitting.md` — train/dev/test·train-dev·OOD·temporal 분할과 평가 설계
 - `concepts/inter-annotator-agreement.md` — 라벨러 합의도(κ 계열)와 NER/LLM 맥락 응용
 - `concepts/kb-anchor-verification.md` — 외부 지식 베이스를 앵커로 삼은 라벨 독립 검증
-- `concepts/agent-skills.md` — Claude Code 의 Agent Skills 운영 패턴
+- `concepts/agent-skills.md` — 시판 에이전트 스킬 카탈로그의 채택 판단(강력추천·보조·제외와 그 근거)
 - `concepts/token-management.md` — LLM 컨텍스트 토큰 운영 전략
 - `concepts/session-handoff.md` — 세션 전환 시 맥락 유실을 막는 4계층 핸드오프 전략
 - `concepts/src-layout-packaging.md` — Python src-layout 과 editable install
@@ -49,7 +49,7 @@
 
 ### `dev/` — 개발 도구·에이전트
 
-- `sources/dev/addyosmani-agent-skills.md` — Addy Osmani 의 Agent Skills 논의
+- `sources/dev/addyosmani-agent-skills.md` — Addy Osmani 의 Agent Skills 카탈로그(수록 스킬 목록·관측 시점)
 - `sources/dev/evans-2003-ddd.md` — DDD 원서, ubiquitous language 정의의 1차 출처
 - `sources/dev/pocock-2026-skills.md` — Matt Pocock 의 Skills For Real Engineers 카탈로그
 - `sources/dev/jeong-2026-vibe-coding-token-management.md` — vibe coding 맥락의 토큰 관리

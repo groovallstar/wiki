@@ -42,3 +42,4 @@
 - `concepts/agentic-data-generation.md` — verifier/judge 독립성(자기 심판 회피)과 동일 원리.
 - `concepts/kb-anchor-verification.md` — 독립 앵커 기반 라벨-독립 검증과 정신적 동형.
 - `concepts/verifier-score-resolution.md` — 직교 축. 이 게이트는 *누가/어디서* 검증하나(독립성·배치)를, 저 페이지는 반박자가 내는 *판정 신호가 얼마나 세밀한가*를 다룬다. 비교 판정("재실행 결과가 보고값과 같은가")도 이산이면 tie 에 걸릴 수 있다.
+- `concepts/agent-skills.md` — 같은 원리를 자동 관문이 아니라 사람이 손으로 도는 절차로 내린 형태(`doubt-driven-development`). 장치를 아직 안 들인 단계에서 쓸 수 있는 최소 형태다.

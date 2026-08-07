@@ -2,6 +2,17 @@
 
 인제스트·린트 이력의 시간순 append-only 로그.
 
+## [2026-08-07] lint | agent-skills 카탈로그 낡음 해소 + 운영문서 정합
+- 전 40개 페이지 6축 점검. 구조축 전부 0건 — 끊어진 링크 0·고아 0·index 누락/dangling 0·concepts §출처 누락 0·교차참조 양방향 불일치 0. 수록 원칙 히트(`src/foo`·`my_package`·`tests/`·`uv sync`)는 전부 packaging 페이지의 일반 예시로 오탐, 호스트 저장소 누출 0건.
+- **낡은 주장 해소 (2026-05-20 부터 이월, 사용자 보류였음)**: GitHub API 로 상류 재확인 — 실제 24종(WebFetch 는 24개를 나열하고 총계를 28로 답해 신뢰 불가, API 를 정본으로 삼음). 2026-04 관측 21종 대비 삭제 0·신규 3종. `sources/dev/addyosmani-agent-skills.md` 목록을 24종·"2026-08 시점"으로 갱신하고 증분 3종을 한 줄씩 풀이.
+- `concepts/agent-skills.md` 신규 3종 평가 반영: `doubt-driven-development` → 강력추천 #4(원문 SKILL.md 대조; 위키가 이미 `loop-verification-gate`·`dynamic-workflows` 로 들고 있는 격리 반박자 원리의 개인 작업 단위 형태), `interview-me` → 보조 #10(착수 전 의도 좁히기), `observability-and-instrumentation` → 제외(배포·운영 계열, 기존 제외 기준과 동일). 보조 번호 4~8 → 5~9 재정렬.
+- 같은 페이지의 **미분류 2건 정리**: `git-workflow-and-versioning`(2026-04 목록에 있었으나 한 번도 평가된 적 없음) → 제외 + 근거 명시(트렁크 기반·잦은 소단위 커밋이라는 스킬 기본값이 저장소 자체 규약과 경쟁). `documentation-and-adrs`(2026-06-12 에 삭제했으나 상류에는 실재) → 걷어낸 이유를 남겨 카탈로그 대사를 24/24 로 닫음.
+- **모순 해소**: 제외 목록의 `context-engineering`(카탈로그 안 스킬 파일)과 `concepts/context-engineering.md`(핵심 개념으로 승격된 분야)가 같은 이름이라 상충으로 읽히던 것 → 가리키는 대상이 다름을 한 줄로 구분.
+- **개념 그래프 고립 해소**: `agent-skills` 는 in=0 out=0 이라 index 로만 닿았음 → §관련 개념 신설(`loop-verification-gate`·`dynamic-workflows`), 양쪽에 역링크 추가.
+- **운영문서 정합 3건**: `schema.md` 예시 블록이 addyosmani 소스를 reorg 이전의 sources 루트 경로로 적고 있던 것을 `sources/dev/addyosmani-agent-skills.md` 로 정정(2026-06-12 가 "무해, 미수정"으로 남긴 잔여 — 예시 블록은 다음 ingest 가 베끼는 자리라 틀린 형태를 가르친다). `index.md` 를 "(선택)"에서 상시 갱신 대상으로 표기 통일(30행 서술·docwiki 스킬과 어긋나 있었음, `log.md` 는 선택 유지). `README.md` 구조 블록에 `index.md`·`log.md`·`sources/<topic>/` 반영해 `schema.md` 와 동기화.
+- **외부 URL 이관 2건**: `concepts/agent-skills.md`·`concepts/token-management.md` 본문 메타의 원문 URL 제거 — 2026-04-30 결정("외부 URL 은 source 파일 메타에만, concepts §출처는 `sources/` 포인터로만")과 어긋나 있었다. 두 URL 모두 각 source 파일에 이미 있어 정보 손실 없음.
+- 잔여: sources 10건의 템플릿 필수 절 누락과 `concepts/agent-skills.md` 구조 미준수는 2026-04-27·2026-07-08 이 "글자강제하면 정보 손실"로 보류한 건이라 유지. flat `concepts/` 재검토 임계 근접(14/15).
+
 ## [2026-07-24] ingest | Kwok 2026 LLM-as-a-Verifier
 - `concepts/verifier-score-resolution.md` 신규 (연속 점수=로짓 기댓값·세 해상도 축[값 G/통계 K/기준 C]·이산 판사 tie 실패 모드·명목 κ↔연속 α 이동·로짓 접근 전제).
 - `sources/labeling/kwok-2026-llm-as-verifier.md` 신규 (arXiv preprint 요약; 원문 HTML 2회 독립 대조로 Eq.3.1·헤드라인 4수치·tie 26.7%@k=1·한계 3종 확정).

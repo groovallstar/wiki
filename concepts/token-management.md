@@ -1,7 +1,5 @@
 # 바이브 코딩의 토큰 관리 전략
 
-> 원문: [roboco.io - 바이브 코딩의 토큰 관리 전략](https://roboco.io/posts/vibe-coding-token-management-strategy/) (정도현, 로보코 수석 컨설턴트)
-
 > "토큰 부족은 모델 성능의 문제가 아니라, 대개 컨텍스트 운영 방식의 문제다."
 
 Claude Code, Codex, Gemini 같은 도구 사용 시 응답 지연, 규칙 망각, 불필요한 파일 수정 등이 발생하는데, 이는 "토큰 부족"이 아니라 **컨텍스트 오염(Context Rot)**의 증상이다.

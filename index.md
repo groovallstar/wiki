@@ -10,7 +10,7 @@
 - `concepts/inter-annotator-agreement.md` — 라벨러 합의도(κ 계열)와 NER/LLM 맥락 응용
 - `concepts/kb-anchor-verification.md` — 외부 지식 베이스를 앵커로 삼은 라벨 독립 검증
 - `concepts/agent-skills.md` — 시판 에이전트 스킬 카탈로그의 채택 판단(강력추천·보조·제외와 그 근거)
-- `concepts/token-management.md` — LLM 컨텍스트 토큰 운영 전략
+- `concepts/token-management.md` — LLM 컨텍스트 토큰 운영 전술(도구 운용 항목은 관측 시점 기준)
 - `concepts/session-handoff.md` — 세션 전환 시 맥락 유실을 막는 4계층 핸드오프 전략
 - `concepts/src-layout-packaging.md` — Python src-layout 과 editable install
 - `concepts/ubiquitous-language.md` — 사용자·개발자 어휘 통일로 번역 비용을 제거하는 DDD 원칙

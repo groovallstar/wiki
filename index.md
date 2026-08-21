@@ -18,6 +18,7 @@
 - `concepts/loop-verification-gate.md` — 결정적 선통과+격리 반박자를 루프 완료 관문으로 두는 검증 방법론
 - `concepts/context-engineering.md` — LLM 읽기 3기제(관련도 어텐션·lost-in-the-middle·유한 윈도우)와 컨텍스트 조성 저술 원리(Do/Don't·가이드라인 vs 하네스)
 - `concepts/verifier-score-resolution.md` — LLM 심판 판정을 연속 점수로 다뤄 값·통계·기준 세 축으로 해상도를 높이는 검증 방법론
+- `concepts/llm-inference-serving.md` — LLM 추론 서빙 성능의 두 단계(prefill/decode)와 KV 캐시·양자화·MoE·attention 변형·prefix caching·speculative decoding(MTP) 용어
 
 ## Sources
 
@@ -46,6 +47,7 @@
 ### `env/` — 개발 환경·패키징
 
 - `sources/env/python-editable-install-research.md` — Python editable install 동작 조사
+- `sources/env/vllm-inference-serving-docs.md` — vLLM 공식 문서: prefix caching 블록 해시·speculative decoding 무손실 보장·MTP 권장 설정
 
 ### `dev/` — 개발 도구·에이전트
 

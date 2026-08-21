@@ -2,6 +2,11 @@
 
 인제스트·린트 이력의 시간순 append-only 로그.
 
+## [2026-08-20] ingest | vLLM 추론 서빙 문서 — LLM 서빙 성능 개념 신설
+- `concepts/llm-inference-serving.md` 신규: prefill/decode 2단계를 축으로 KV 캐시·지연/처리량·양자화(`W4A16`·`group_size`·`ignore`)·MoE·attention 변형(full/sliding/linear/hybrid)·prefix caching·speculative decoding(MTP)을 정리.
+- `sources/env/vllm-inference-serving-docs.md` 신규: prefix caching 블록 해시와 전체 블록 제약, speculative decoding 의 greedy 동일성 보장, MTP 권장 추측 토큰 1개와 고동시성 처리량 대가.
+- `index.md` 에 개념 1건·소스 1건 반영.
+
 ## [2026-08-07] query-filed | 토큰 관리 페이지의 유효성 비판적 검토
 - 질문: `concepts/token-management.md` 가 위키 취지에 맞고 아직 유효한가.
 - **진단**: 수록 원칙은 글자 그대로는 안 어긴다(호스트 경로 없음·프로젝트 독립). 어긋나는 것은 위키가 말한 적 없는 가정이다 — 다른 개념 페이지는 논문·인지 원리에 기대 수십 년 단위로 유효한 반면, 이 페이지는 블로그 1건과 특정 제품의 슬래시 명령·설정 파일에 기대 릴리스 단위로 낡는다. `schema.md` 는 프로젝트 독립성만 요구하고 시간 독립성은 요구하지 않아 규칙으로는 안 걸린다.

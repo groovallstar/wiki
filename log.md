@@ -2,6 +2,13 @@
 
 인제스트·린트 이력의 시간순 append-only 로그.
 
+## [2026-08-25] ingest | vLLM 운영 문서·엔진 로그 — 서버 운영 개념 신설
+- `concepts/vllm-serving-operations.md` 신규: 기동 5단계와 각 단계의 로그, 메모리 예산 나눗셈(예산 → 가중치·임시 메모리 차감 → 토큰 환산 → 동시성 배수), 손잡이 넷의 상충, 운행 통계 줄 읽기, 지표 3조합으로 병목 가르기, 기동 실패 6유형.
+- `sources/env/vllm-serving-operations-docs.md` 신규: 로그 형식 문자열 원문, 동시성 배수가 토큰 수보다 먼저 계산된다는 점, CUDA graph 회계 기본 활성, preemption 경고 원문과 대처 우선순위, 지표 이름·유형, 기동 오류 원문.
+- **1차분과의 역할 분담**: `llm-inference-serving` 은 왜 빠르고 느린가(개념 축), 신설 페이지는 그것이 어떤 이름으로 화면에 나타나는가(운영 축). 1차분의 §서버를 띄울 때 만나는 손잡이들에서 신설 페이지로 포인터를 걸었다.
+- **도구 종속 페이지를 concepts 에 둔 근거**: 로그 문자열을 인용하려면 엔진을 특정해야 한다. `schema.md` §수록 원칙은 호스트 저장소의 경로·스크립트·결과 파일명을 금지할 뿐 도구 옵션명을 금지하지 않고, 위키를 공유하는 다른 저장소에서도 같은 엔진을 쓰므로 재사용된다. 페이지 머리에 이름은 엔진 종속이고 구조는 아님을 명시했다.
+- `index.md` 에 개념 1건·소스 1건 반영.
+
 ## [2026-08-20] ingest | vLLM 추론 서빙 문서 — LLM 서빙 성능 개념 신설
 - `concepts/llm-inference-serving.md` 신규: prefill/decode 2단계를 축으로 KV 캐시·지연/처리량·양자화(`W4A16`·`group_size`·`ignore`)·MoE·attention 변형(full/sliding/linear/hybrid)·prefix caching·speculative decoding(MTP)을 정리.
 - `sources/env/vllm-inference-serving-docs.md` 신규: prefix caching 블록 해시와 전체 블록 제약, speculative decoding 의 greedy 동일성 보장, MTP 권장 추측 토큰 1개와 고동시성 처리량 대가.

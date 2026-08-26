@@ -185,4 +185,4 @@ flowchart LR
 
 ## 출처
 
-- `sources/env/vllm-inference-serving-docs.md` — prefix caching 의 블록 해시·전체 블록만 캐시되는 제약, speculative decoding 의 무손실 보장(greedy 동일성)과 저부하 편향, MTP 의 권장 추측 토큰 수와 동시성 대가
+- `sources/llm/vllm-inference-serving-docs.md` — prefix caching 의 블록 해시·전체 블록만 캐시되는 제약, speculative decoding 의 무손실 보장(greedy 동일성)과 저부하 편향, MTP 의 권장 추측 토큰 수와 동시성 대가

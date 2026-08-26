@@ -48,8 +48,11 @@
 ### `env/` — 개발 환경·패키징
 
 - `sources/env/python-editable-install-research.md` — Python editable install 동작 조사
-- `sources/env/vllm-inference-serving-docs.md` — vLLM 공식 문서: prefix caching 블록 해시·speculative decoding 무손실 보장·MTP 권장 설정
-- `sources/env/vllm-serving-operations-docs.md` — vLLM 운영 문서·엔진 로그: 기동 로그 원문 포맷·메모리 예산 구성·preemption 경고·지표 이름·기동 오류 원문
+
+### `llm/` — LLM 서빙·추론
+
+- `sources/llm/vllm-inference-serving-docs.md` — vLLM 공식 문서: prefix caching 블록 해시·speculative decoding 무손실 보장·MTP 권장 설정
+- `sources/llm/vllm-serving-operations-docs.md` — vLLM 운영 문서·엔진 로그: 기동 로그 원문 포맷·메모리 예산 구성·preemption 경고·지표 이름·기동 오류 원문
 
 ### `dev/` — 개발 도구·에이전트
 

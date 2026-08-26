@@ -133,4 +133,4 @@ Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rat
 
 ## 출처
 
-- `sources/env/vllm-serving-operations-docs.md` — 기동 로그·통계 줄의 원문 포맷, 동시성 배수가 토큰 수보다 먼저 계산된다는 점, CUDA graph 회계의 기본 활성과 그 효과, preemption 경고 원문과 대처 우선순위, 지표 이름·유형, 기동 오류 원문
+- `sources/llm/vllm-serving-operations-docs.md` — 기동 로그·통계 줄의 원문 포맷, 동시성 배수가 토큰 수보다 먼저 계산된다는 점, CUDA graph 회계의 기본 활성과 그 효과, preemption 경고 원문과 대처 우선순위, 지표 이름·유형, 기동 오류 원문

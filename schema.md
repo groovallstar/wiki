@@ -40,7 +40,7 @@ wiki/
 | 참조 방향 | 주로 수신 (concepts → sources) | 허브 (수·발신 모두) |
 | 이동 비용 | 낮음 | 높음 (cross-ref 대규모 갱신) |
 
-**`sources/<topic>/<slug>.md`** — topic 폴더로 묶는다. 현재 운영 중인 topic: `ner/`·`labeling/`·`env/`·`dev/`. 새 topic 은 최소 2개 이상의 원문이 모이고 기존 topic 에 어울리지 않을 때 신설.
+**`sources/<topic>/<slug>.md`** — topic 폴더로 묶는다. 현재 운영 중인 topic: `ner/`·`labeling/`·`env/`·`llm/`·`dev/`. 새 topic 은 최소 2개 이상의 원문이 모이고 기존 topic 에 어울리지 않을 때 신설.
 
 **`concepts/<slug>.md`** — 평면 유지. 개념은 주제를 가로지르므로 단일 parent 폴더 선택이 자주 인위적이 되고, concept-to-concept cross-ref 가 허브 구조라 이동 비용이 크다. 재검토 임계치: 페이지 수 > 15, 명확히 구분되는 3개 이상 클러스터 각각 ≥ 4 페이지, 동일 폴더 내 cross-ref 가 폴더간 cross-ref 를 압도.
 

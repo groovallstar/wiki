@@ -2,6 +2,13 @@
 
 인제스트·린트 이력의 시간순 append-only 로그.
 
+## [2026-08-26] lint | vLLM 소스 2건을 `env/` 에서 `llm/` 로 이동
+- `sources/env/` 는 개발 환경·패키징 topic 인데 vLLM 서빙 문서 둘이 거기 얹혀 있었다. 성격이 달라 `llm/`(LLM 서빙·추론) 을 신설해 옮겼다.
+- **둘을 함께 옮긴 이유**: `schema.md` §폴더 정책이 "새 topic 은 최소 2개 이상의 원문이 모일 때 신설"로 정하고 있다. 하나만 옮기면 원문 1개짜리 폴더가 되고 형제 소스가 두 폴더로 갈린다.
+- 갱신: `index.md` 에 `llm/` 절 신설, `schema.md` 의 운영 topic 목록에 `llm/` 추가, `concepts/llm-inference-serving.md`·`concepts/vllm-serving-operations.md` 의 §출처 경로, 이 로그의 지난 항목이 가리키던 경로.
+- **지난 로그 항목의 경로는 갱신했다** — 표현은 당시 기록이라 두지만 경로는 가리키는 자리라, 옛 경로로 두면 죽은 링크가 된다.
+- `sources/env/` 에는 `python-editable-install-research.md` 가 남아 topic 이 유지된다.
+
 ## [2026-08-26] lint | 같은 개념의 두 이름·원어 없는 조어 일괄 정리
 - 손잡이 건과 같은 기준으로 `concepts/` 전체를 훑었다. 판정은 "비유인가"가 아니라 **원어 없는 한국어 조어가 용어 자리(절 제목·표 헤더)에 앉았는가 · 한 개념이 두 이름으로 불리는가** 였다 — 산문 속 비유는 대상이 아니다.
 - **운행 → 운영**: 서버에 차량용 어휘를 썼다(운행은 노선·차량에 쓴다). `vllm-serving-operations`·그 소스·`llm-inference-serving`·`index.md`.
@@ -16,19 +23,19 @@
 - 두 vLLM 페이지가 조정 가능한 설정을 **손잡이**라 불렀다. 영어권 시스템 엔지니어링 관용어 `knob`(tuning knobs)의 옮김이다.
 - **확인 결과 출처에 없는 말이었다**: 인용한 vLLM 문서 네 편(optimization·metrics·troubleshooting·conserving_memory)을 내려받아 세어보니 `knob` 0회, 원문이 쓰는 용어는 `parameter`·`option` 이었다.
 - 한국어 기술 문서에 설정을 손잡이라 부르는 관행이 없어 **원어 병기로도 독자가 대조할 원문이 생기지 않는다.** 도구 종속 용어처럼 원어를 남겨 살릴 수 있는 경우와 다르므로 비유를 걷어냈다.
-- 교체 범위: `concepts/vllm-serving-operations.md` 5곳(요약문·개요·핵심 원칙·절 제목), `concepts/llm-inference-serving.md` 3곳(절 제목·표 헤더의 "잘못 잡으면" 포함·포인터 문장), `sources/env/vllm-serving-operations-docs.md` 1곳, `index.md` 1곳.
+- 교체 범위: `concepts/vllm-serving-operations.md` 5곳(요약문·개요·핵심 원칙·절 제목), `concepts/llm-inference-serving.md` 3곳(절 제목·표 헤더의 "잘못 잡으면" 포함·포인터 문장), `sources/llm/vllm-serving-operations-docs.md` 1곳, `index.md` 1곳.
 - 위 [2026-08-25] 항목은 당시의 기록이라 손대지 않았다.
 
 ## [2026-08-25] ingest | vLLM 운영 문서·엔진 로그 — 서버 운영 개념 신설
 - `concepts/vllm-serving-operations.md` 신규: 기동 5단계와 각 단계의 로그, 메모리 예산 나눗셈(예산 → 가중치·임시 메모리 차감 → 토큰 환산 → 동시성 배수), 손잡이 넷의 상충, 운행 통계 줄 읽기, 지표 3조합으로 병목 가르기, 기동 실패 6유형.
-- `sources/env/vllm-serving-operations-docs.md` 신규: 로그 형식 문자열 원문, 동시성 배수가 토큰 수보다 먼저 계산된다는 점, CUDA graph 회계 기본 활성, preemption 경고 원문과 대처 우선순위, 지표 이름·유형, 기동 오류 원문.
+- `sources/llm/vllm-serving-operations-docs.md` 신규: 로그 형식 문자열 원문, 동시성 배수가 토큰 수보다 먼저 계산된다는 점, CUDA graph 회계 기본 활성, preemption 경고 원문과 대처 우선순위, 지표 이름·유형, 기동 오류 원문.
 - **1차분과의 역할 분담**: `llm-inference-serving` 은 왜 빠르고 느린가(개념 축), 신설 페이지는 그것이 어떤 이름으로 화면에 나타나는가(운영 축). 1차분의 §서버를 띄울 때 만나는 손잡이들에서 신설 페이지로 포인터를 걸었다.
 - **도구 종속 페이지를 concepts 에 둔 근거**: 로그 문자열을 인용하려면 엔진을 특정해야 한다. `schema.md` §수록 원칙은 호스트 저장소의 경로·스크립트·결과 파일명을 금지할 뿐 도구 옵션명을 금지하지 않고, 위키를 공유하는 다른 저장소에서도 같은 엔진을 쓰므로 재사용된다. 페이지 머리에 이름은 엔진 종속이고 구조는 아님을 명시했다.
 - `index.md` 에 개념 1건·소스 1건 반영.
 
 ## [2026-08-20] ingest | vLLM 추론 서빙 문서 — LLM 서빙 성능 개념 신설
 - `concepts/llm-inference-serving.md` 신규: prefill/decode 2단계를 축으로 KV 캐시·지연/처리량·양자화(`W4A16`·`group_size`·`ignore`)·MoE·attention 변형(full/sliding/linear/hybrid)·prefix caching·speculative decoding(MTP)을 정리.
-- `sources/env/vllm-inference-serving-docs.md` 신규: prefix caching 블록 해시와 전체 블록 제약, speculative decoding 의 greedy 동일성 보장, MTP 권장 추측 토큰 1개와 고동시성 처리량 대가.
+- `sources/llm/vllm-inference-serving-docs.md` 신규: prefix caching 블록 해시와 전체 블록 제약, speculative decoding 의 greedy 동일성 보장, MTP 권장 추측 토큰 1개와 고동시성 처리량 대가.
 - `index.md` 에 개념 1건·소스 1건 반영.
 
 ## [2026-08-07] query-filed | 토큰 관리 페이지의 유효성 비판적 검토

@@ -2,6 +2,13 @@
 
 인제스트·린트 이력의 시간순 append-only 로그.
 
+## [2026-08-26] lint | 손잡이 → 설정값, 출처에 없는 비유 제거
+- 두 vLLM 페이지가 조정 가능한 설정을 **손잡이**라 불렀다. 영어권 시스템 엔지니어링 관용어 `knob`(tuning knobs)의 옮김이다.
+- **확인 결과 출처에 없는 말이었다**: 인용한 vLLM 문서 네 편(optimization·metrics·troubleshooting·conserving_memory)을 내려받아 세어보니 `knob` 0회, 원문이 쓰는 용어는 `parameter`·`option` 이었다.
+- 한국어 기술 문서에 설정을 손잡이라 부르는 관행이 없어 **원어 병기로도 독자가 대조할 원문이 생기지 않는다.** 도구 종속 용어처럼 원어를 남겨 살릴 수 있는 경우와 다르므로 비유를 걷어냈다.
+- 교체 범위: `concepts/vllm-serving-operations.md` 5곳(요약문·개요·핵심 원칙·절 제목), `concepts/llm-inference-serving.md` 3곳(절 제목·표 헤더의 "잘못 잡으면" 포함·포인터 문장), `sources/env/vllm-serving-operations-docs.md` 1곳, `index.md` 1곳.
+- 위 [2026-08-25] 항목은 당시의 기록이라 손대지 않았다.
+
 ## [2026-08-25] ingest | vLLM 운영 문서·엔진 로그 — 서버 운영 개념 신설
 - `concepts/vllm-serving-operations.md` 신규: 기동 5단계와 각 단계의 로그, 메모리 예산 나눗셈(예산 → 가중치·임시 메모리 차감 → 토큰 환산 → 동시성 배수), 손잡이 넷의 상충, 운행 통계 줄 읽기, 지표 3조합으로 병목 가르기, 기동 실패 6유형.
 - `sources/env/vllm-serving-operations-docs.md` 신규: 로그 형식 문자열 원문, 동시성 배수가 토큰 수보다 먼저 계산된다는 점, CUDA graph 회계 기본 활성, preemption 경고 원문과 대처 우선순위, 지표 이름·유형, 기동 오류 원문.

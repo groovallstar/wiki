@@ -39,7 +39,7 @@
 - 기본값(`VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=1`): 그래프 몫을 미리 빼둔다. 문서의 안내는 "The current `--gpu-memory-utilization=%.4f` is equivalent to `--gpu-memory-utilization=%.4f` without CUDA graph memory profiling" — 즉 같은 사용률이라도 예전보다 KV 캐시가 작게 잡힌다.
 - 끄면: "Without it, CUDA graph memory is not accounted for during KV cache allocation, which may require lowering `--gpu-memory-utilization` to avoid OOM."
 
-### 손잡이 사이의 상충
+### 설정값 사이의 상충
 
 - `gpu_memory_utilization`: KV 캐시로 미리 잡는 비율. 올리면 "provide more KV cache memory", 너무 높으면 기동 중 메모리 부족.
 - `max_num_seqs`: 내리면 "reduces the number of concurrent requests in a batch, thereby requiring less KV cache space".

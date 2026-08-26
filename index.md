@@ -19,7 +19,7 @@
 - `concepts/context-engineering.md` — LLM 읽기 3기제(관련도 어텐션·lost-in-the-middle·유한 윈도우)와 컨텍스트 조성 저술 원리(Do/Don't·가이드라인 vs 하네스)
 - `concepts/verifier-score-resolution.md` — LLM 심판 판정을 연속 점수로 다뤄 값·통계·기준 세 축으로 해상도를 높이는 검증 방법론
 - `concepts/llm-inference-serving.md` — LLM 추론 서빙 성능의 두 단계(prefill/decode)와 KV 캐시·양자화·MoE·attention 변형·prefix caching·speculative decoding(MTP) 용어
-- `concepts/vllm-serving-operations.md` — vLLM 서버 운영: 기동 로그 다섯 단계와 메모리 예산 나눗셈·손잡이 넷의 상충·운행 통계 줄과 지표로 병목 가르기·기동 실패 유형
+- `concepts/vllm-serving-operations.md` — vLLM 서버 운영: 기동 로그 다섯 단계와 메모리 예산 나눗셈·설정값 넷의 상충·운행 통계 줄과 지표로 병목 가르기·기동 실패 유형
 
 ## Sources
 

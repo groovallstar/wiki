@@ -93,9 +93,10 @@ variance가 크면 처방은 정칙화·데이터 증가, mismatch가 크면 tra
 
 분할이 *무엇을* 재는지 정하면, 그 위에서 **단일 최적화 지표 1개 +
 나머지 가드레일(satisficing)** 로 의사결정을 구조화한다
-(`sources/ner/ng-2018-ml-yearning.md`). 평가 천장의 기준자로는
-사람 간 합의도(IAA)를 쓴다 — 모델 성능이 IAA에 닿으면 그것이 실질
-상한이다(`concepts/inter-annotator-agreement.md`).
+(`sources/ner/ng-2018-ml-yearning.md`). 평가의 상한은 사람 간
+합의도(IAA)로 잡는다 — 모델 성능이 IAA에 닿으면 그 위는 사람끼리도
+답이 갈리는 구간이라 더 올려도 잴 수가 없다
+(`concepts/inter-annotator-agreement.md`).
 
 ### NER 적용 메모
 

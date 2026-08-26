@@ -92,7 +92,7 @@ UI/프론트엔드/배포 계열은 CLI·배치 기반 데이터 파이프라인
 
 ## 관련 개념
 
-- `concepts/loop-verification-gate.md` — `doubt-driven-development` 가 개인 작업 단위로 내린 원리를, 루프 완료 관문이라는 자동화 장치로 올린 형태.
+- `concepts/loop-verification-gate.md` — `doubt-driven-development` 가 개인 작업 단위로 내린 원리를, 루프 완료 게이트라는 자동화 장치로 올린 형태.
 - `concepts/dynamic-workflows.md` — 자기편애·게으름·목표 표류 세 실패 모드. 위 스킬들이 각각 어느 실패 모드를 겨냥하는지의 상위 지도.
 
 ## 출처

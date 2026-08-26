@@ -36,11 +36,11 @@ R(x, τ) = (1 / CK) · Σ_c Σ_k Σ_g  p_θ(v_g | x, c, τ) · φ(v_g)
 
 세 축은 직교하며 Eq. 3.1 의 세 합 기호에 각각 대응한다.
 
-### 이산 판사의 tie 문제 (핵심 근거)
+### 이산 심판의 tie 문제 (핵심 근거)
 
 - Figure 7 캡션: *"The judge produces ties in 26.7% of comparisons at k=1 due to coarse discrete scoring."*
-- Table 2 (query-optimize 사례): 이산 1–5 판사는 100회 중 **88회가 동점**. *같은* 1–5 척도에 기댓값을 취하는 것만으로 tie 가 사라짐 — 척도를 바꾸지 않고 이산→연속만으로 변별이 생긴다는 논거.
-- 이산 판사 계보는 Zheng et al. (LLM-as-a-judge / MT-Bench) 를 인용.
+- Table 2 (query-optimize 사례): 이산 1–5 심판은 100회 중 **88회가 동점**. *같은* 1–5 척도에 기댓값을 취하는 것만으로 tie 가 사라짐 — 척도를 바꾸지 않고 이산→연속만으로 변별이 생긴다는 논거.
+- 이산 심판 계보는 Zheng et al. (LLM-as-a-judge / MT-Bench) 를 인용.
 
 ### 헤드라인 결과 (Table 3)
 

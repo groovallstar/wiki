@@ -1,10 +1,10 @@
 # Loop Verification Gate (격리 컨텍스트 반박자 게이트)
 
-> 자동 지속 루프의 완료 시점에, 싸고 결정적인 검사를 먼저 통과시킨 뒤 격리 컨텍스트의 반박자가 산출물을 반증하게 하여 거짓 완료를 막는 검증 관문.
+> 자동 지속 루프의 완료 시점에, 싸고 결정적인 검사를 먼저 통과시킨 뒤 격리 컨텍스트의 반박자가 산출물을 반증하게 하여 거짓 완료를 막는 검증 게이트.
 
 ## 개요
 
-`loop until done` 류의 자동 지속 루프(에이전트가 "완료"를 선언할 때까지 반복)는 `concepts/dynamic-workflows.md` 의 세 실패 모드 — 특히 게으른 조기 완료와 자기 출력 편애 — 에 취약하다. 루프 검증 게이트는 **완료 선언 시점**에 끼어들어, 통과하지 못하면 완료를 막는 검문소다. adversarial verification 패턴을 "완료 관문"으로 구체화한 것이다.
+`loop until done` 류의 자동 지속 루프(에이전트가 "완료"를 선언할 때까지 반복)는 `concepts/dynamic-workflows.md` 의 세 실패 모드 — 특히 게으른 조기 완료와 자기 출력 편애 — 에 취약하다. 루프 검증 게이트는 **완료 선언 시점**에 끼어들어, 통과하지 못하면 완료를 막는다. adversarial verification 패턴을 완료 게이트로 구체화한 것이다.
 
 ## 핵심 원칙
 
@@ -42,4 +42,4 @@
 - `concepts/agentic-data-generation.md` — verifier/judge 독립성(자기 심판 회피)과 동일 원리.
 - `concepts/kb-anchor-verification.md` — 독립 앵커 기반 라벨-독립 검증과 정신적 동형.
 - `concepts/verifier-score-resolution.md` — 직교 축. 이 게이트는 *누가/어디서* 검증하나(독립성·배치)를, 저 페이지는 반박자가 내는 *판정 신호가 얼마나 세밀한가*를 다룬다. 비교 판정("재실행 결과가 보고값과 같은가")도 이산이면 tie 에 걸릴 수 있다.
-- `concepts/agent-skills.md` — 같은 원리를 자동 관문이 아니라 사람이 손으로 도는 절차로 내린 형태(`doubt-driven-development`). 장치를 아직 안 들인 단계에서 쓸 수 있는 최소 형태다.
+- `concepts/agent-skills.md` — 같은 원리를 자동 게이트가 아니라 사람이 손으로 도는 절차로 내린 형태(`doubt-driven-development`). 장치를 아직 안 들인 단계에서 쓸 수 있는 최소 형태다.

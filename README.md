@@ -67,7 +67,6 @@ git submodule update --init --recursive
 
 - 스킬은 **키워드 트리거**로 호출된다. 일반 프롬프트에서는 위키를 자동 참조하지 않는다 — 필요할 때만 읽는다.
 - 스킬 본체는 전역 `~/.claude/skills/docwiki/SKILL.md`, 데이터 규칙은 `schema.md`, 상위 규칙은 각 호스트 저장소의 `CLAUDE.md` 중 위키를 언급하는 절. 세 곳 모두 schema 우선 원칙으로 정합성을 유지한다.
-- OMC의 범용 `wiki` 스킬(`.omc/wiki/` 대상)과는 별개 시스템이다. 섞지 않는다.
 
 ## 참고
 

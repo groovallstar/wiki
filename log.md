@@ -164,3 +164,14 @@
 - `schema.md §디렉토리 구조` 에 현재 sources topic 폴더 구조 반영.
 - 신규 하위 절 "폴더 정책: sources 는 topic-grouped, concepts 는 flat" 추가.
 - concepts flat 유지 결정 근거와 재검토 임계치 명시 (페이지 수·클러스터 균질성·cross-ref 비율).
+
+## [2026-09-14] lint | 최신 기술 반영 상태 점검
+- 범위: 개념 16건·소스 24건의 카탈로그와 내부 참조를 전수 검사하고, 변화가 빠른 서빙·에이전트 스킬·합성 데이터·검증자 자료를 중심으로 외부 원문을 표본 대조했다. 전체 분야의 최신 논문을 망라한 조사나 모든 문장의 사실 검증은 아니다.
+- 구조 검사: 백틱으로 표기한 위키 상대 파일 참조를 기준으로 끊어진 참조, 인덱스 누락, 소스 인용 없는 개념, 누락된 source 역링크, 다른 페이지에서 참조되지 않는 고아 페이지는 모두 0건이었다. 외부 URL 전체의 접속 검사는 수행하지 않았다. 페이지 추가·이동이 없어 인덱스와 교차 참조는 유지했다.
+- 종합 판정: 최근 자료는 일부 반영되어 있지만 최신 기술을 충분히 포괄한다고 보기는 어렵다. 기존 로그에는 8월 서빙 자료 수록이 있으며 `concepts/agentic-data-generation.md`와 `concepts/verifier-score-resolution.md`에는 2026년 자료가 반영되어 있다. [Autodata 원문](https://facebookresearch.github.io/RAM/blogs/autodata/)과 [LLM-as-a-Verifier 서지](https://arxiv.org/abs/2607.05391)를 재열람했다. 후자는 7월 7일 v2가 표시되어 있어 “제출 직후”라는 표현의 기준일 보완이 필요하며, 재현·후속 연구의 부재는 이번에 검증하지 않았다.
+- 우선 수정 후보: `concepts/llm-inference-serving.md` §내 워크로드는 어느 쪽인가의 “프롬프트가 토큰의 99%이므로 decode 가속 대상은 시간의 1%”라는 추론은 성립하지 않는다. [NVIDIA의 prefill/decode 설명](https://developer.nvidia.com/blog/?p=73739)은 입력 병렬 처리와 출력 순차 처리를 구분한다. 따라서 토큰 비율을 시간 비율로 대체할 수 없으며 실제 단계별 시간을 측정해야 한다. 같은 페이지의 가중치 절반→속도 두 배 설명도 배치·KV 읽기·커널 비용 등의 조건을 명시해야 한다.
+- 우선 수정 후보: 같은 개념 §미리 추측하는 법과 `sources/llm/vllm-inference-serving-docs.md`의 “greedy 출력이 달라지면 결함”이라는 단정에는 수치 오차와 배치 조건이 빠져 있다. [vLLM Lossless guarantees](https://docs.vllm.ai/en/latest/features/speculative_decoding/#lossless-guarantees-of-speculative-decoding)는 알고리즘 검증과 별개로 부동소수점·배치 크기에 따른 출력 변동 가능성을 명시한다.
+- 출처 보완 후보: 두 서빙 페이지의 “추측 1개 채택률은 통상 90% 초과”는 이번에 열람한 [MTP 문서](https://docs.vllm.ai/en/latest/features/speculative_decoding/mtp/)에서 근거를 찾지 못했다. 해당 문서는 추측 깊이 1을 시작값으로 제시하지만 보편적인 채택률은 제시하지 않는다. 수치의 모델·워크로드·버전 근거가 필요하다. 두 vLLM 소스 노트의 latest 링크에는 정확한 열람일과 버전 또는 커밋 고정이 필요하다.
+- 최신성 차이: `sources/dev/addyosmani-agent-skills.md`의 2026-08 관측 목록은 meta-skill 포함 24종이다. [상류 README](https://github.com/addyosmani/agent-skills)는 본문에서 lifecycle 24종+meta 1종, 총 25종을 설명하며 `constraint-driven-development`를 포함한다. 기존 관측 기록 자체의 오류가 아니라 현행 목록과의 차이이며, `concepts/agent-skills.md`의 채택 판단도 함께 검토해야 한다. 상류 절 제목에는 여전히 “All 24 Skills”가 있어 제목만으로 개수를 판단하면 안 된다.
+- 수록 보완 후보: [GLiNER2 (EMNLP 2025)](https://aclanthology.org/2025.emnlp-demos.10/)의 스키마 기반 NER·분류·구조 추출은 현 위키에 수록되지 않았다. [vLLM Chunked Prefill](https://docs.vllm.ai/en/latest/configuration/optimization/#chunked-prefill)은 V1의 가능한 경우 기본 활성화와 decode 우선 스케줄링, TTFT·ITL 상충을 설명하지만 `concepts/vllm-serving-operations.md`에는 이 운영 원리가 충분히 반영되어 있지 않다. 기존 소스에는 chunked prefill 비활성화 시 제약만 있다. 미수록은 기존 BIO·데이터셋 설명이 틀렸다는 뜻은 아니다.
+- 처리: 이번 요청은 반영 상태 확인이므로 내용 변경 후보와 근거를 먼저 기록했다. 개념·소스 본문 수정과 신규 자료 인제스트는 수행하지 않았다. GPU 실험, 모델 성능 재현, 전체 외부 링크 검사, 도구별 최신 동작의 전수 검증은 미실시했다.

@@ -3,8 +3,10 @@
 - **저자**: Jacky Kwok, Shulu Li, Pranav Atreya, Yuejiang Liu, Yixing Jiang, Chelsea Finn, Marco Pavone, Ion Stoica, Azalia Mirhoseini (Stanford University · UC Berkeley · NVIDIA Research)
 - **연도**: 2026 (7월, v2 07-07)
 - **매체/학회**: arXiv preprint (cs.AI/CL/LG/MA/RO)
-- **링크**: https://arxiv.org/abs/2607.05391
-- **유형**: 1차 문헌 (preprint — 제출 직후, 재현·후속 없음. 세부 주장은 "저자 보고"로 취급)
+- **링크**: https://arxiv.org/abs/2607.05391v2
+- **유형**: 1차 문헌 (preprint — 세부 주장은 "저자 보고"로 취급)
+
+- **서지 재확인일**: 2026-09-14. 독립 재현·후속 연구의 존재 여부는 이번에 검증하지 않았다.
 
 ## 핵심 요지
 
@@ -20,7 +22,7 @@ R(x, τ) = (1 / CK) · Σ_c Σ_k Σ_g  p_θ(v_g | x, c, τ) · φ(v_g)
 
 - `p_θ(v_g|·)`: 모델이 점수 토큰 `v_g` 에 부여한 확률(로짓 softmax)
 - `φ(v_g)`: 각 점수 토큰을 스칼라 값으로 매핑
-- `C`(기준 수)·`K`(반복 수)·`G`(점수 토큰 수)로 평균
+- `C`(기준 수)·`K`(반복 수)에 대해 평균하고, `G`개 점수 토큰은 확률 가중합을 취한다.
 
 **구현 디테일**: 점수 척도는 1–20 이되 **숫자가 아니라 letter 기반**으로 둔다 — *"we use a letter-based scale instead of digits to enable logprob extraction for granularity scaling."* 숫자 토큰화의 불규칙성을 피해 상위 logprob 을 깨끗이 뽑기 위함. 실험에서 `G∈{1,4,16,20}`, `K∈{1,16}`, `C∈{1,3}`.
 
@@ -30,11 +32,11 @@ R(x, τ) = (1 / CK) · Σ_c Σ_k Σ_g  p_θ(v_g | x, c, τ) · φ(v_g)
 
 | 축 | 늘리는 것 | 효과(저자 보고) |
 |---|---|---|
-| **Score Granularity (G)** | 추출 점수 토큰 개수 (1→20) | 값 분해능 상승, tie 제거 |
+| **Score Granularity (G)** | 추출 점수 토큰 개수 (1→20) | 값 분해능 상승, 보고된 비교에서 tie 감소 |
 | **Repeated Evaluation (K)** | 독립 검증 패스 수 (1→16) | Monte-Carlo 추정, 분산 O(1/K) 감소 |
 | **Criteria Decomposition (C)** | 평가 기준 개수 (코드: Specification·Output·Errors) | 신호 분해 후 앙상블 |
 
-세 축은 직교하며 Eq. 3.1 의 세 합 기호에 각각 대응한다.
+세 축은 Eq. 3.1의 세 합 기호에 대응한다. 효과의 통계적 독립성을 뜻하지 않으며, 반복 평균의 분산 감소에는 독립 표본 가정이 필요하다.
 
 ### 이산 심판의 tie 문제 (핵심 근거)
 
@@ -55,7 +57,7 @@ Pass@1(단일 시도)과 Oracle Pass@N(N 후보 중 정답이 하나라도 있�
 
 ### 한계 (Appendix A, 원문 표현)
 
-1. **로짓 접근 전제**: *"it assumes access to scoring-token logits, which excludes several frontier models available only through restricted APIs."* 폐쇄형 API 대응은 2단계 우회(추론 생성↔로짓 추출 모델 분리, B.6)로만 가능.
+1. **로짓 접근 전제**: *"it assumes access to scoring-token logits, which excludes several frontier models available only through restricted APIs."* 필요한 점수 토큰 확률을 제공하지 않는 API에는 추론 생성과 점수 확률 추출 모델을 분리하는 2단계 방식(B.6)을 대안으로 제시한다. 로짓 없이 필요한 logprob을 제공하는 API까지 배제하는 것은 아니다.
 2. **기준의 수동 설계**: *"criteria decomposition could be learned or dynamically generated per domain rather than hand-designed."* 현재 C 는 손으로 지정.
 3. **단일턴 제한**: *"our experiments are limited to single-turn settings"* — 장기 궤적의 다중 단계 신용 할당(per-step reward)은 미완.
 
@@ -66,5 +68,5 @@ Pass@1(단일 시도)과 Oracle Pass@N(N 후보 중 정답이 하나라도 있�
 ### 관련 개념 (이 소스를 직접 인용하진 않음)
 
 - `concepts/loop-verification-gate.md` — 검증을 *어디서/누가* 하나(독립성)와 직교하는, *얼마나 세밀하게* 판정하나
-- `concepts/inter-annotator-agreement.md` — 판정이 연속 척도가 되면 명목 κ 가 아니라 Krippendorff α/ICC 로 이동
+- `concepts/inter-annotator-agreement.md` — 판정 척도와 거리의 의미에 맞춘 합의도 지표 선택
 - `concepts/agentic-data-generation.md` — verifier/judge 가 풀이를 채점하는 지점의 신호 해상도

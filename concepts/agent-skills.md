@@ -68,12 +68,20 @@
 
 ---
 
+### 11. constraint-driven-development
+- **요지**: 기존 검사와 측정값을 먼저 확인하고, 품질 기준·실패 처리·검사 비용을 합의하여 문서와 자동 검사에 반영한다. 테스트 삭제나 임계값 하향처럼 통과 기준을 약화하는 변경도 감시한다.
+- **적합성**: 기준이 없거나 자동 작업 중 검증 수준이 흔들리는 상황에서 보조 도구로 활용할 수 있다. 이는 위키의 채택 판단이며 모든 작업에 적용하라는 상류 보장은 아니다.
+- **주의**: 이미 확정된 저장소 규칙과 평가 기준을 우선한다. 별도 기준 문서를 중복 생성하거나 관측 성능에 맞춰 성공 기준을 임의로 낮추지 않는다.
+
+---
+
 ## 도입 방식 제안
 
-1. **즉시 도입**: TDD, debugging-and-error-recovery — 기존 원칙과 100% 정렬, 런타임 비용 없음.
-2. **작업 앞뒤에 상시**: interview-me(착수 전 의도 좁히기) → doubt-driven-development(비자명한 결정이 서기 전 반증). 둘은 같은 축의 앞뒤라 짝으로 쓸 때 값이 크다 — 앞은 *무엇을 만들 것인가*의 어긋남을, 뒤는 *만든 것이 맞는가*의 어긋남을 잡는다.
+1. **기본 절차로 검토**: TDD, debugging-and-error-recovery — 저장소의 기존 검증 절차와 결합한다. 실행 시간과 검토 비용은 작업에 따라 발생한다.
+2. **요구가 불명확하거나 결정이 비자명할 때**: interview-me(착수 전 의도 좁히기) → doubt-driven-development(비자명한 결정이 서기 전 반증). 둘은 같은 축의 앞뒤라 짝으로 쓸 때 값이 크다 — 앞은 *무엇을 만들 것인가*의 어긋남을, 뒤는 *만든 것이 맞는가*의 어긋남을 잡는다.
 3. **다음 중간 규모 작업에 시범 적용**: spec-driven-development + planning-and-task-breakdown + incremental-implementation 세트.
-4. **참조용 체크리스트로 보관**: code-review-and-quality, code-simplification, performance-optimization — 작업 트리거 시 스킬 원문 참조.
+4. **품질 기준이 비어 있을 때 시범 적용**: constraint-driven-development를 활용하되 기존 합의를 먼저 확인한다.
+5. **참조용 체크리스트로 보관**: code-review-and-quality, code-simplification, performance-optimization — 작업 트리거 시 스킬 원문 참조.
 
 ## 제외된 스킬 (참고)
 

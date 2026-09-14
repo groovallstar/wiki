@@ -1,18 +1,24 @@
 # vLLM 프로젝트 — 서버 운영 문서·엔진 로그 (튜닝 · 지표 · 장애 대응)
 
 - **저자**: vLLM 프로젝트
-- **연도**: 2026 (열람 시점 기준 최신판)
+- **연도**: 2026
+- **열람일**: 2026-09-14
+- **검증 기준 커밋**: `73d2a8cf86c46e21af723ffd34ce0d56668fdd14` (개발 브랜치이며 안정 릴리스와 구분한다.)
 - **매체/학회**: 공식 문서 + 엔진 소스의 로그 포맷 문자열
 - **링크**:
   - https://docs.vllm.ai/en/latest/configuration/optimization.html
   - https://docs.vllm.ai/en/latest/usage/metrics.html
   - https://docs.vllm.ai/en/latest/usage/troubleshooting.html
-  - https://github.com/vllm-project/vllm — 로그·오류 문자열은 엔진 소스에서 직접 확인
+  - https://github.com/vllm-project/vllm/tree/73d2a8cf86c46e21af723ffd34ce0d56668fdd14 — 문서와 엔진을 고정한 검증 기준
+  - https://github.com/vllm-project/vllm/blob/73d2a8cf86c46e21af723ffd34ce0d56668fdd14/docs/configuration/optimization.md
+  - https://github.com/vllm-project/vllm/blob/73d2a8cf86c46e21af723ffd34ce0d56668fdd14/vllm/v1/worker/gpu_worker.py
+  - https://github.com/vllm-project/vllm/blob/73d2a8cf86c46e21af723ffd34ce0d56668fdd14/vllm/v1/core/kv_cache_utils.py
+  - https://github.com/vllm-project/vllm/blob/73d2a8cf86c46e21af723ffd34ce0d56668fdd14/vllm/v1/metrics/loggers.py
 - **유형**: 1차 문헌 (구현 주체가 쓴 운영 문서와 그 구현체)
 
 ## 핵심 요지
 
-서버를 띄우는 쪽에서 실제로 마주치는 것은 개념이 아니라 **로그 몇 줄과 옵션 몇 개**다. 이 문서들과 엔진 소스를 함께 보면 그 줄들이 임의의 진단 메시지가 아니라 **하나의 나눗셈을 단계마다 찍은 중간값**임이 드러난다 — 카드 메모리에서 무엇을 빼고 남은 자리가 KV 캐시가 되며, 그 자리가 동시 처리 수를 정한다. 기동 실패 메시지도 같은 나눗셈이 한 요청 몫에 못 미쳤다는 보고다.
+서버를 띄우는 쪽에서 실제로 마주치는 것은 개념이 아니라 **로그 몇 줄과 옵션 몇 개**다. 이 문서들과 엔진 소스를 함께 보면 그 줄들이 임의의 진단 메시지가 아니라 **하나의 나눗셈을 단계마다 찍은 중간값**임이 드러난다 — 카드 메모리에서 무엇을 빼고 남은 자리가 KV 캐시가 되며, 그 자리가 동시 처리 수를 정한다. 캐시 부족 오류는 한 요청에 필요한 메모리와 예산을 비교한다. 다른 기동 오류까지 캐시 부족으로 일반화하지 않는다.
 
 ## 주요 내용
 
@@ -43,8 +49,12 @@
 
 - `gpu_memory_utilization`: KV 캐시로 미리 잡는 비율. 올리면 "provide more KV cache memory", 너무 높으면 기동 중 메모리 부족.
 - `max_num_seqs`: 내리면 "reduces the number of concurrent requests in a batch, thereby requiring less KV cache space".
-- `max_num_batched_tokens`: 한 iteration 의 토큰 예산. 작은 값(문서 예시 2048)은 토큰 간 지연에 유리하고, 큰 값(8192 초과, 특히 큰 GPU 의 작은 모델)은 첫 토큰 시간에 유리하다.
+- `max_num_batched_tokens`: 한 iteration 의 토큰 예산. 작은 값(문서 예시 2048)은 토큰 간 지연에 유리하고, 큰 값은 첫 토큰 시간에 유리할 수 있다. 8192 초과는 특히 큰 GPU의 작은 모델에서 처리량을 위한 권장 출발점이다.
 - 제약: "When chunked prefill is disabled, `max_num_batched_tokens` must be greater than `max_model_len`".
+
+### Chunked prefill
+
+V1은 가능한 경우 기본 활성화하며 decode를 우선 배치한다. 남은 반복당 토큰 예산에 prefill을 넣고, 들어가지 않는 입력은 나누어 처리한다. ITL·TTFT·처리량의 상충을 고려해 예산을 조정한다.
 
 ### 자리가 모자랄 때 — preemption
 
@@ -52,11 +62,11 @@
 
 > `Sequence group 0 is preempted by PreemptionMode.RECOMPUTE mode because there is not enough KV cache space. This can affect the end-to-end performance. Increase gpu_memory_utilization or tensor_parallel_size to provide more KV cache memory. total_cumulative_preemption_cnt=1`
 
-V1 아키텍처의 기본 모드는 `SWAP` 이 아니라 `RECOMPUTE` 다 — 되돌린 요청을 다시 계산하는 편이 오버헤드가 낮기 때문이다. 대처 순서는 문서가 제시한 우선순위대로 사용률 상향 → 동시 요청 수·배치 토큰 예산 하향 → 병렬도 상향이다.
+V1 아키텍처의 기본 모드는 `SWAP` 이 아니라 `RECOMPUTE` 다 — 되돌린 요청을 다시 계산하는 편이 오버헤드가 낮기 때문이다. 문서는 사용률 상향, 동시 요청 수·배치 토큰 예산 하향, 병렬도 상향을 대안으로 제시한다. 고정된 적용 순서가 아니라 가용 메모리와 통신 비용을 보고 선택한다.
 
 ### 운영 중 정기 통계 줄
 
-엔진이 주기적으로 찍는 한 줄은 고정 항목 넷에 조건부 항목이 붙는 형태다.
+엔진이 주기적으로 찍는 한 줄은 고정 항목 여섯에 조건부 항목이 붙는 형태다.
 
 - 항상: `Avg prompt throughput: %.1f tokens/s`, `Avg generation throughput: %.1f tokens/s`, `Running: %d reqs`, `Waiting: %d reqs`, `GPU KV cache usage: %.1f%%`, `Prefix cache hit rate: %.1f%%`
 - 조건부: `Preemptions: %d`(한 번이라도 발생), `Deferred: %d reqs`(대기 중 건너뛴 요청이 있을 때), `External prefix cache hit rate`·`MM cache hit rate`(해당 기능 사용 시)

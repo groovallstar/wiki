@@ -246,3 +246,7 @@ tags   = ['B_PS','I','B_PS','B_LC','B_LC']
 - `sources/ner/park-2021-klue.md` — 음절 단위 NER (KLUE) 사례
 - `sources/ner/pan-2017-wikiann.md` — 어절 단위 NER (WikiANN) 사례
 - `sources/ner/kmou-ner-dataset.md` — 형태소 단위 + 비표준 BIO (KMOU) 사례
+
+## 관련 개념
+
+- `concepts/schema-driven-extraction.md` — 타입·필드를 입력으로 지정하는 추출 방식과 BIO 표현의 구분

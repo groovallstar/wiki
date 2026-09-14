@@ -4,6 +4,8 @@
 
 ## Concepts
 
+- `concepts/schema-driven-extraction.md` — 스키마 기반 NER·분류·구조 추출과 평가 범위
+
 - `concepts/agentic-data-generation.md` — 에이전트 기반 합성 데이터 생성(데이터 과학자 루프·난이도 격차 게이트·메타 최적화)
 - `concepts/bio-tagging.md` — BIO/IOB 태그 체계와 토큰 단위별 Span 변환
 - `concepts/data-splitting.md` — train/dev/test·train-dev·OOD·temporal 분할과 평가 설계
@@ -25,7 +27,9 @@
 
 소스는 주제별 하위 폴더로 구분한다.
 
-### `ner/` — NER 태깅 스킴·데이터셋
+### `ner/` — NER 태깅 스킴·데이터셋·추출 방법
+
+- `sources/ner/zaratiana-2025-gliner2.md` — GLiNER2의 다중 작업 추출과 논문의 평가 한계
 
 - `sources/ner/ramshaw-marcus-1995-bio-tagging.md` — BIO/IOB 태그 스킴의 원조 논문
 - `sources/ner/park-2021-klue.md` — 한국어 KLUE 벤치마크(음절 단위 NER 사례)
@@ -51,12 +55,14 @@
 
 ### `llm/` — LLM 서빙·추론
 
-- `sources/llm/vllm-inference-serving-docs.md` — vLLM 공식 문서: prefix caching 블록 해시·speculative decoding 무손실 보장·MTP 권장 설정
-- `sources/llm/vllm-serving-operations-docs.md` — vLLM 운영 문서·엔진 로그: 기동 로그 원문 포맷·메모리 예산 구성·preemption 경고·지표 이름·기동 오류 원문
+- `sources/llm/nvidia-inference-optimization.md` — prefill/decode·배치·KV·양자화의 성능 조건
+
+- `sources/llm/vllm-inference-serving-docs.md` — vLLM 공식 문서: prefix caching 블록 해시·speculative decoding의 수치 재현성 한계·MTP 시작값
+- `sources/llm/vllm-serving-operations-docs.md` — vLLM 운영 문서·엔진 로그: 기동 로그 원문 포맷·메모리 예산 구성·preemption 경고·chunked prefill 스케줄링·지표 이름·기동 오류 원문
 
 ### `dev/` — 개발 도구·에이전트
 
-- `sources/dev/addyosmani-agent-skills.md` — Addy Osmani 의 Agent Skills 카탈로그(수록 스킬 목록·관측 시점)
+- `sources/dev/addyosmani-agent-skills.md` — Addy Osmani 의 Agent Skills 카탈로그(25종 스킬 목록·관측일·고정 커밋)
 - `sources/dev/evans-2003-ddd.md` — DDD 원서, ubiquitous language 정의의 1차 출처
 - `sources/dev/pocock-2026-skills.md` — Matt Pocock 의 Skills For Real Engineers 카탈로그
 - `sources/dev/jeong-2026-vibe-coding-token-management.md` — vibe coding 맥락의 토큰 관리

@@ -175,3 +175,14 @@
 - 최신성 차이: `sources/dev/addyosmani-agent-skills.md`의 2026-08 관측 목록은 meta-skill 포함 24종이다. [상류 README](https://github.com/addyosmani/agent-skills)는 본문에서 lifecycle 24종+meta 1종, 총 25종을 설명하며 `constraint-driven-development`를 포함한다. 기존 관측 기록 자체의 오류가 아니라 현행 목록과의 차이이며, `concepts/agent-skills.md`의 채택 판단도 함께 검토해야 한다. 상류 절 제목에는 여전히 “All 24 Skills”가 있어 제목만으로 개수를 판단하면 안 된다.
 - 수록 보완 후보: [GLiNER2 (EMNLP 2025)](https://aclanthology.org/2025.emnlp-demos.10/)의 스키마 기반 NER·분류·구조 추출은 현 위키에 수록되지 않았다. [vLLM Chunked Prefill](https://docs.vllm.ai/en/latest/configuration/optimization/#chunked-prefill)은 V1의 가능한 경우 기본 활성화와 decode 우선 스케줄링, TTFT·ITL 상충을 설명하지만 `concepts/vllm-serving-operations.md`에는 이 운영 원리가 충분히 반영되어 있지 않다. 기존 소스에는 chunked prefill 비활성화 시 제약만 있다. 미수록은 기존 BIO·데이터셋 설명이 틀렸다는 뜻은 아니다.
 - 처리: 이번 요청은 반영 상태 확인이므로 내용 변경 후보와 근거를 먼저 기록했다. 개념·소스 본문 수정과 신규 자료 인제스트는 수행하지 않았다. GPU 실험, 모델 성능 재현, 전체 외부 링크 검사, 도구별 최신 동작의 전수 검증은 미실시했다.
+
+## [2026-09-14] ingest | 정확성 보완과 최신 자료 수록
+- 앞선 상태 점검에 이어 사용자가 정확성·최신성 보완을 요청하여 본문 수정과 신규 수록으로 진행했다. 평가 기준은 토큰 수와 실행 시간의 구분, 성능·재현성 주장의 조건 명시, 고정 출처, 양방향 참조와 인덱스 일치다. 런타임 코드나 실험 평가 기준은 변경하지 않는다.
+- `concepts/llm-inference-serving.md`와 vLLM 소스 2건·운영 개념을 갱신했다. 토큰 비율을 시간 비율로 해석한 오류, 양자화 배수·MTP 채택률·고부하 부적합의 단정, greedy 출력 차이의 무조건 결함 판정을 수정했다. chunked prefill의 decode 우선 스케줄링과 TTFT·ITL·처리량 상충을 보완했다.
+- `sources/llm/nvidia-inference-optimization.md`를 수록해 성능 설명의 출처를 보완했다. vLLM 문서·엔진은 개발 커밋을 고정하고 안정 릴리스와 구분했다.
+- `sources/ner/zaratiana-2025-gliner2.md`와 `concepts/schema-driven-extraction.md`를 수록했다. 지원 기능과 정량 평가 범위를 구분하고 BIO 개념과 연결했다. 논문의 실험 결과를 다국어 또는 모든 장치의 성능으로 일반화하지 않았다.
+- 스킬 카탈로그를 고정 커밋의 25종으로 갱신하고 `constraint-driven-development`의 조건부 채택 판단을 추가했다. 검증자 개념·소스는 v2와 서지 확인일을 명시하고, 재현 연구 부재·동점 완전 제거·연속값의 자동 간격척도 전환 같은 단정을 정정했다.
+- 신규 페이지의 양방향 참조와 인덱스를 갱신했다. 기존 점검 기록은 당시 상태로 보존했다. GPU 실행·논문 재현·모든 분야의 최신 논문 조사는 수행하지 않는다.
+
+## [2026-09-14] lint | 보완 문서의 구조 검증
+- 개념 17건·소스 26건의 위키 상대 파일 참조, 인덱스, 소스 인용, 역링크, 고아 페이지를 검사하여 누락 0건을 확인했다. 스킬 목록 25종이 고정 상류 README의 25종과 일치하며 `git diff --check`를 통과했다. 문서만 변경하여 pytest·Ruff와 GPU·모델 실행 검증은 수행하지 않았다.

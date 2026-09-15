@@ -186,3 +186,7 @@
 
 ## [2026-09-14] lint | 보완 문서의 구조 검증
 - 개념 17건·소스 26건의 위키 상대 파일 참조, 인덱스, 소스 인용, 역링크, 고아 페이지를 검사하여 누락 0건을 확인했다. 스킬 목록 25종이 고정 상류 README의 25종과 일치하며 `git diff --check`를 통과했다. 문서만 변경하여 pytest·Ruff와 GPU·모델 실행 검증은 수행하지 않았다.
+
+## [2026-09-15] ingest | Ask HN: 스킬 파일을 어떻게 관리하시나요?
+- `sources/dev/geeknews-2026-skill-file-management.md`를 수록하고, `concepts/agent-skills.md`와 `concepts/context-engineering.md`에 관리·검증 및 문서 분리 원칙을 반영했다. 인덱스와 양방향 참조를 갱신했으며 HN 원 댓글 일부를 공식 API로 대조했다.
+- 검증: 44개 페이지의 인덱스·내부 참조·출처 역링크와 신규 소스 템플릿을 검사했고 `git diff --check`를 통과했다. 독립 리뷰에서 GeekNews와 인용한 원 댓글 4건을 대조했으며 지적 사항은 없었다. 문서 변경으로 pytest·Ruff는 실행하지 않았고 전체 토론 검증은 수행하지 않았다.

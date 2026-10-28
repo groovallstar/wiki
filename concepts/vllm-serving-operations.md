@@ -83,17 +83,19 @@ Avg prompt throughput: 0.0 tokens/s, Avg generation throughput: 0.0 tokens/s,
 Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rate: 0.0%
 ```
 
-`Preemptions: N` 은 되돌려진 요청이 한 번이라도 생겨야 붙는다. **이 줄이 아예 안 보이면 대개 고장이 아니라 요청이 없는 것이다** — 유휴 상태에서는 로그 수준이 내려가 화면에서 사라진다.
+유휴 상태에서는 통계 줄의 로그 수준이 debug로 내려가 기본 화면에서 사라질 수 있다. 로그가 없다는 사실만으로 요청 유무나 정상 동작을 확정하지 않는다.
+
+고정 개발 커밋에는 `Preemptions: N` 형식 문자열이 있지만, 출력 전에 통계를 초기화하는 순서 때문에 이 항목의 표시를 신뢰할 수 없다. 이 구현 확인 결과는 해당 커밋에 한정하며, 설치한 버전에서는 동작을 다시 확인한다. preemption 여부는 별도의 누적 지표 `vllm:num_preemptions`와 경고를 함께 확인한다.
 
 | 보이는 것 | 무슨 상태 | 만질 것 |
 |---|---|---|
 | `Waiting` 이 쌓이고 KV 사용률이 높다 | 자리가 없어 새 요청이 못 들어간다 | 사용률 상향, 또는 문맥 길이·동시 요청 수 하향 |
 | `Waiting` 0 인데 `Running` 도 낮다 | 서버가 아니라 보내는 쪽이 한산하다 | 클라이언트 동시성을 올려야 배치가 찬다 |
-| `Preemptions` 가 계속 는다 | 받은 요청을 되돌렸다가 다시 계산하는 중 | 즉시 부하를 줄인다. 성능 급락의 직접 원인 |
+| `vllm:num_preemptions` 증가분이 계속 발생한다 | 캐시 압박으로 진행 중인 요청을 물리고 다시 계산하는 중 | 입력 부하와 캐시 예산을 확인하고 부하·동시성·메모리 설정을 조정한다 |
 | `Prefix cache hit rate` 가 낮은데 프롬프트 앞부분이 같다 | 앞부분에 매번 달라지는 값이 섞였다 | 시각·난수 같은 값을 프롬프트 뒤로 옮긴다 |
 | prompt 처리량만 높고 generation이 낮다 | 입력·출력 토큰 수 차이일 수도 있어 병목을 확정할 수 없다 | 단계별 시간과 요청 길이를 함께 확인한다 |
 
-**되돌려짐(preemption)이 가장 중요한 신호다.** 자리가 모자라면 엔진은 요청을 거절하는 대신 이미 진행 중인 요청을 물리고 나중에 다시 계산한다. 그래서 겉으로는 거절 없이 조용히 느려지기만 하고, 이 항목을 안 보면 원인을 못 찾는다. 경고는 "there is not enough KV cache space" 라는 문구로 나온다.
+**되돌려짐(preemption)은 캐시 압박의 신호다.** 자리가 모자라면 엔진은 이미 진행 중인 요청을 물리고 나중에 다시 계산할 수 있다. 따라서 요청 거절이 없어도 누적 지표와 경고를 확인한다. 소스 노트가 인용한 문서의 경고에는 "there is not enough KV cache space"라는 문구가 나온다.
 
 ### 지표로 병목 가르기
 
@@ -111,12 +113,12 @@ Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rat
 |---|---|---|---|
 | 문맥 한 번이 안 들어간다 | `To serve at least one request with the model's max seq len ...` | 요청 하나 몫이 남은 자리보다 크다 | 엔진이 함께 알려주는 추정 최대 길이 이하로 문맥 길이를 낮춘다 |
 | 남는 자리가 없다 | `No available memory for the cache blocks.` | 가중치가 예산을 거의 다 먹었다 | 사용률을 올리거나 더 작게 양자화된 모델로 바꾼다 |
-| 마지막 단계에서 죽는다 | `Capturing CUDA graphs` 진행 중 중단 | 캡처가 예상보다 메모리를 먹는다 | `--enforce-eager` 로 캡처를 꺼 원인을 가른다. 대가는 decode 성능 |
+| 마지막 단계에서 죽는다 | `Capturing CUDA graphs` 진행 중 중단 | 캡처 메모리 부족 또는 그래프 경로의 CUDA·연산 지원 문제일 수 있다 | `--enforce-eager`로 그래프 경로를 격리하여 실제 오류를 확인하고 성능 영향도 측정한다 |
 | 프로파일링이 어긋난다 | `Error in memory profiling. Initial free memory ...` | 재는 동안 다른 프로세스가 같은 카드에서 메모리를 놨다 | 카드를 독점시킨다 |
 | 적재가 안 끝난다 | 로그가 적재 단계에서 멈춘다 | 네트워크 저장소나 스왑 스래싱 | 로컬 디스크로 옮긴다. 적재가 원인인지는 더미 적재로 가른다 |
 | 메모리가 예상보다 크게 잡힌다 | `Hybrid KV cache manager is disabled ...` | sliding window 레이어를 full attention 으로 취급해 캐시를 잡는다 | 해당 버전의 hybrid cache 지원과 비활성화 설정을 확인하고 예산을 조정한다 |
 
-**두 번째와 세 번째를 헷갈리면 시간을 크게 버린다.** 둘 다 메모리 부족으로 보이지만, 앞은 예산 나눗셈이 실패한 것이라 사용률·문맥 길이로 풀고 뒤는 준비 작업이 실패한 것이라 캡처를 꺼서 푼다. **가르는 기준은 로그가 어디까지 갔는가** — 캐시 확정 줄이 이미 찍혔다면 나눗셈은 성공한 것이다.
+**예산 부족과 그래프 경로의 오류를 구분한다.** 캐시 확정 로그까지 진행했다면 예산 계산 단계를 통과했다는 단서지만, 이후 실패 원인이 메모리뿐이라는 뜻은 아니다. `--enforce-eager`는 그래프 경로를 격리하는 진단 수단이며, 실제 오류와 설치 버전의 지원 범위를 확인하여 대처한다.
 
 ### 용어 빠른 표
 
@@ -139,4 +141,4 @@ Running: 0 reqs, Waiting: 0 reqs, GPU KV cache usage: 0.0%, Prefix cache hit rat
 
 ## 출처
 
-- `sources/llm/vllm-serving-operations-docs.md` — 기동 로그·통계 줄의 원문 포맷, 동시성 배수가 토큰 수보다 먼저 계산된다는 점, CUDA graph 회계의 기본 활성과 그 효과, preemption 경고 원문과 대처 우선순위, 지표 이름·유형, chunked prefill 스케줄링, 기동 오류 원문
+- `sources/llm/vllm-serving-operations-docs.md` — 기동 로그·통계 줄의 원문 포맷, 동시성 배수가 토큰 수보다 먼저 계산된다는 점, CUDA graph 회계의 기본 활성과 그 효과, preemption 경고 원문과 대처 선택지·고정 커밋의 통계 초기화 순서, 지표 이름·유형, chunked prefill 스케줄링, 기동 오류 원문

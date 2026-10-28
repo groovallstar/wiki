@@ -1,10 +1,11 @@
 # Kulikov et al. (2026) — Autodata: an Automatic Data Scientist to Create High-Quality Data
 
-- **저자**: Kulikov et al. (Meta AI, 13인)
-- **연도**: 2026 (4월)
+- **저자**: Ilia Kulikov 외 (현재 공식 블로그의 Contributors 15인)
+- **연도**: 2026 (블로그 게시 월은 원문에서 확인하지 못함)
 - **매체/학회**: Meta AI RAM(Reasoning, Alignment, and Memory) 프로젝트 블로그
 - **링크**: https://facebookresearch.github.io/RAM/blogs/autodata/
 - **유형**: 2차 자료 (기술 블로그)
+- **서지·설명 확인일**: 2026-10-28. 기존 노트의 4월·13인 표기는 현재 원문에서 확인하지 못했으며, 이 노트는 블로그 요약 범위를 유지한다.
 
 ## 핵심 요지
 
@@ -31,13 +32,15 @@ CoT 기반 방법의 한계다. Autodata 는 LLM 에이전트를 **자율 데이
 |---|---|
 | **Challenger LLM** | 프롬프트로부터 후보 예제(문제)를 생성 |
 | **Weak Solver** | 일부러 약한 설정 — 이 문제에 *실패할 것으로 기대* |
-| **Strong Solver** | 같은 모델 + 강화(CoT·집계 등) — *성공할 것으로 기대* |
+| **Strong Solver** | 더 강한 모델 또는 강화된 추론 설정 — *성공할 것으로 기대* |
 | **Verifier/Judge** | 풀이를 루브릭에 대고 채점 |
 
-오케스트레이터는 다음 **수용 기준**을 만족할 때까지 반복한다:
+weak·strong는 서로 다른 모델일 수도 있고 같은 모델의 서로 다른 추론 설정일 수도 있다. 블로그의 **수용 조건 중 일부**는 다음과 같다:
 - weak solver 점수 **≤ 65%**
 - strong solver 점수 **≥ 60%**
 - 둘의 격차 **≥ 20%p**
+
+전체 조건에는 품질 검사 통과와 추가 점수 조건이 있다. 위 세 수치만으로 완전한 수용 게이트를 정의하지 않는다.
 
 즉 "약한 풀이자는 못 풀고 강한 풀이자는 푸는" 예제만 통과시켜, 데이터가
 모델 역량 수준을 **변별**하도록 강제한다.

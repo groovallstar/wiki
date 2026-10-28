@@ -1,10 +1,12 @@
 # Anthropic (2026) — A harness for every task: dynamic workflows in Claude Code
 
-- **저자**: Anthropic
+- **저자**: Thariq Shihipar, Sid Bidasaria (Anthropic)
 - **연도**: 2026
 - **매체/학회**: Anthropic Blog (claude.com/blog)
 - **링크**: https://claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code
-- **유형**: 2차 자료
+- **유형**: 1차 문헌 (제작사의 기능 설명과 사용 경험)
+- **게시일**: 2026-06-02
+- **확인일**: 2026-10-28
 
 ## 핵심 요지
 
@@ -42,6 +44,10 @@
 ### 코인된 용어
 
 harness, subagent, worktree(격리 실행 환경), agentic laziness, self-preferential bias, goal drift.
+
+### 적용 범위
+
+저자는 동적 워크플로가 모든 작업에 필요하지 않으며 토큰 사용량이 크게 늘 수 있다고 설명한다. 정규 코딩 작업에 다수 검토자 패널이 필요한지부터 판단한다. 실행 환경의 맥락 상속·중첩 제한이나 Stop 훅의 상세 동작을 이 글의 보편적 보장으로 해석하지 않는다.
 
 ## 인용하는 위키 페이지
 

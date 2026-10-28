@@ -11,7 +11,7 @@
 5. [설정 예시 (uv + hatchling)](#5-설정-예시-uv--hatchling)
 6. [`.pth` 파일과 `sys.path` 주입 메커니즘](#6-pth-파일과-syspath-주입-메커니즘)
 7. [가상환경 격리 — 여러 venv에서의 동작](#7-가상환경-격리--여러-venv에서의-동작)
-8. [세 가지 경로 주입 방식 비교](#8-세-가지-경로-주입-방식-비교)
+8. [네 가지 경로 주입 방식 비교](#8-네-가지-경로-주입-방식-비교)
 9. [명시형 vs 자동 탐색 — 새 서브패키지 추가 시 운영비용](#9-명시형-vs-자동-탐색--새-서브패키지-추가-시-운영비용)
 10. [흔한 오해와 주의점](#10-흔한-오해와-주의점)
 
@@ -62,20 +62,20 @@ project/
 
 ## 3. Editable install이란
 
-> **핵심:** 프로젝트를 "설치된 패키지"처럼 파이썬에 등록하되, 파일을 복사하지 않고 **원본 디렉토리를 가리키는 포인터**만 남긴다. 소스 수정이 즉시 반영된다.
+> **핵심:** 프로젝트를 설치된 패키지로 등록하되 Python 코드를 소스 트리에서 불러오도록 연결한다. PEP 660은 editable wheel 인터페이스를 정의하며, 연결 방식은 빌드 백엔드가 정한다. Python 소스 수정은 재설치 없이 반영되지만 의존성·진입점 변경이나 확장 모듈은 별도 설치·빌드가 필요할 수 있다.
 
 ### 일반 install vs editable install
 
 | | 일반 install (`pip install .`) | editable install (`pip install -e .`) |
 |---|---|---|
-| site-packages에 들어가는 것 | 소스 파일 복사본 | 원본 디렉토리를 가리키는 포인터(`.pth`) |
+| site-packages에 들어가는 것 | 소스 파일 복사본 | 메타데이터와 소스 연결 장치(`.pth`·프록시 등) |
 | 소스 수정 반영 | 재설치 필요 | 즉시 반영 |
 | 용도 | 배포/운영 | 개발 |
 | 디스크 공간 | 복사본만큼 추가 | 미미 |
 
 ### 무엇이 설치되는가
 
-editable install을 실행하면 파이썬 가상환경의 `site-packages/` 안에 다음이 생긴다.
+이 문서의 Hatchling 기본 개발 모드와 `src` 레이아웃 예시에서는 가상환경의 `site-packages/` 안에 다음과 같은 파일이 생긴다. 다른 백엔드나 개발 모드는 프록시·심볼릭 링크 등 다른 연결 방식을 사용할 수 있다.
 
 ```
 venv/lib/pythonX.Y/site-packages/
@@ -84,7 +84,7 @@ venv/lib/pythonX.Y/site-packages/
 └── (기타 의존성들)
 ```
 
-`.pth` 파일의 내용은 프로젝트 소스 디렉토리의 **절대경로** 한 줄이다.
+이 예시의 `.pth` 파일은 프로젝트 소스 디렉토리의 **절대경로**를 담는다.
 
 ```
 /abs/path/to/project/src
@@ -123,7 +123,7 @@ pyproject.toml  ── [build-system] ──→  빌드 백엔드 (hatchling, se
 |--------|------|
 | **hatchling** | 경량, 설정 간결, PyPA 공식 권장 중 하나 |
 | **setuptools** | 가장 오래됨, 방대한 기능, 복잡한 설정 |
-| **poetry-core** | Poetry 기본, lock 파일과 강결합 |
+| **poetry-core** | Poetry의 빌드 백엔드이며 다른 PEP 517 frontend에서도 독립적으로 사용 가능 |
 | **flit-core** | 순수 파이썬 단일 패키지에 최적 |
 
 본 문서는 hatchling을 예로 든다. 개념은 어느 백엔드든 동일하다.
@@ -174,12 +174,12 @@ uv sync
 uv pip install -e .
 ```
 
-설치 후에는 어느 쉘에서든 PYTHONPATH 없이 import가 된다.
+설치한 환경의 Python을 사용하면 PYTHONPATH 없이 import할 수 있다. 셸 활성화 없이 프로젝트 환경을 선택하려면 `uv run`을 사용한다.
 
 ```bash
-python -c "import my_package"           # 정상
-python -m my_package.cli ...            # 정상
-pytest tests/                           # 정상
+uv run python -c "import my_package"
+uv run python -m my_package.cli ...
+uv run pytest tests/
 ```
 
 ### `[tool.uv] package` 설정의 의미
@@ -203,14 +203,14 @@ pytest tests/                           # 정상
 
 ## 6. `.pth` 파일과 `sys.path` 주입 메커니즘
 
-editable install의 핵심은 파이썬 표준 기능인 `.pth` 파일이다.
+Hatchling 기본 개발 모드의 경로 연결에는 파이썬 표준 기능인 `.pth` 파일이 쓰인다. 이것이 PEP 660 전체의 유일한 구현 방식은 아니다.
 
 ### `.pth` 파일 규약
 
 - 위치: 가상환경의 `site-packages/` 아래
-- 내용: 절대경로를 줄 단위로 나열
+- 내용: 추가할 경로를 줄 단위로 나열하며, 이 예시에서는 절대경로를 사용한다.
 - 파이썬 인터프리터가 기동할 때 `site` 모듈이 `site-packages/*.pth`를 자동 스캔
-- 각 줄을 `sys.path`에 추가
+- 존재하는 경로를 `sys.path`에 추가하며 빈 줄과 주석은 건너뛴다. `site` 자동 처리를 끄는 `-S` 실행은 이 설명의 대상에서 제외한다.
 
 예시:
 
@@ -236,7 +236,7 @@ print(sys.path)
 - PYTHONPATH는 **쉘 환경변수 → `sys.path` 주입** 경로
 - `.pth`는 **site-packages 파일 → `sys.path` 주입** 경로
 - 두 방법 모두 파이썬의 표준 import 메커니즘에 훅을 건 것
-- editable install은 후자를 자동으로 설정한다
+- 이 문서의 Hatchling 기본 개발 모드는 후자를 자동으로 설정한다.
 
 ---
 
@@ -280,18 +280,18 @@ venv-C를 activate해도 my-project 코드는 `sys.path`에 **안 들어간다**
 ### 핵심 원리
 
 - `.pth` 파일은 **절대경로**를 담지만 **자기가 속한 venv 내부에서만 효력**을 갖는다.
-- venv를 activate하지 않으면 파이썬이 그 venv의 `site-packages`를 아예 읽지 않는다.
+- 어떤 환경의 `site-packages`를 읽는지는 실행한 Python 인터프리터가 정한다. 셸 활성화는 PATH를 바꾸는 편의 기능이며 `uv run`이나 venv Python의 절대경로로도 그 환경을 사용할 수 있다.
 - 결과적으로 editable install은 venv 격리 경계를 깨지 않는다.
 
 ### 전역 파이썬(venv 밖)에 editable install하면?
 
 - `.pth`가 **시스템 파이썬의 site-packages**에 들어간다 → 해당 파이썬을 쓰는 모든 프로세스가 영향받는다.
 - **이것은 venv를 쓰지 않은 사용자의 실수이지 editable install 자체의 결함은 아니다.**
-- 개발 환경에서는 항상 venv를 activate한 뒤 설치한다.
+- 개발 환경에서는 설치 대상과 실행 인터프리터를 같은 venv로 맞춘다. 셸 활성화는 필수가 아니다.
 
 ---
 
-## 8. 세 가지 경로 주입 방식 비교
+## 8. 네 가지 경로 주입 방식 비교
 
 | 방식 | 영향 범위 | 다른 venv에 영향? | 설정 난이도 |
 |------|-----------|-------------------|-------------|
@@ -305,7 +305,7 @@ venv-C를 activate해도 my-project 코드는 `sys.path`에 **안 들어간다**
 - **표준 파이썬 메커니즘** — 추가 도구 불필요 (direnv 등)
 - **venv 격리 준수** — 다른 프로젝트 오염 없음
 - **의도 명시** — `pip list`에 프로젝트가 나타나므로 "이 환경이 이 프로젝트를 다룬다"는 사실이 드러남
-- **CI/배포와 대칭** — 운영 환경의 `pip install .`과 같은 경로로 설치되므로 로컬-운영 괴리 없음
+- **CI/배포와 같은 패키징 설정 활용** — editable 설치와 일반 wheel의 파일 노출은 다를 수 있으므로 배포 검증에서는 일반 설치도 확인한다.
 - **동료 온보딩 단순** — `git clone` 후 `uv sync` 한 줄이면 끝
 
 ### 언제 PYTHONPATH가 여전히 적절한가
@@ -349,7 +349,7 @@ sources = ["src"]
 - `src/` 아래 **모든 것이 패키지**이고 앞으로도 그럴 계획 → 자동 탐색
 - `src/` 아래 **비패키지 리소스가 섞여 있음** → 명시형 (혼입 방지)
 
-`uv.lock`은 의존성 그래프만 추적하므로 **두 방식 모두 `uv.lock` 수정과 무관**하다.
+위 파일 선택 방식의 변경이나 내부 Python 패키지 추가 자체는 보통 `uv.lock` 갱신을 요구하지 않는다. 의존성이나 다른 프로젝트 메타데이터가 함께 바뀌었다면 별도로 확인한다.
 
 ---
 
@@ -361,27 +361,27 @@ sources = ["src"]
 
 ### 오해 2: "패키지 하나 추가하면 `uv.lock`을 재생성해야 한다"
 
-`uv.lock`은 **외부 의존성 그래프**만 기록한다. 내부 서브패키지 추가는 lock 파일과 무관. lock은 `dependencies` 목록이 바뀔 때만 재계산된다.
+내부 Python 서브패키지 추가 자체는 보통 lock 파일 변경을 요구하지 않는다. 그러나 lock 최신 여부는 프로젝트 메타데이터에도 의존하며, `uv lock --upgrade` 같은 명시적 갱신도 가능하다. `dependencies` 목록 변경만이 갱신 조건은 아니다.
 
 ### 오해 3: "editable install은 성능이 느리다"
 
-런타임 성능은 일반 install과 동일하다. 파이썬은 `.pth`로 추가된 경로를 평범한 `sys.path` 항목으로 취급한다. 설치 시간만 약간 단축된다 (파일 복사 생략).
+Hatchling 기본 경로 방식에서는 파이썬이 `.pth`로 추가된 경로를 평범한 `sys.path` 항목으로 취급한다. 이 설명을 프록시 등 다른 editable 구현의 성능 보장으로 일반화하지 않는다.
 
 ### 오해 4: "editable install을 한 venv에서 `import`하면 영원히 그 경로에 고정된다"
 
-venv를 deactivate하거나 다른 venv로 바꾸면 즉시 해제된다. `.pth`는 activate된 venv의 Python이 기동할 때만 읽힌다.
+새로 실행한 Python은 자신이 속한 환경의 `.pth`를 읽는다. 셸 활성화·해제는 이후 명령의 인터프리터 선택에 영향을 주며, 이미 실행 중인 Python의 import 경로나 모듈을 바꾸지 않는다.
 
 ### 주의 1: 전역 파이썬에 editable install하지 말 것
 
-`pip install -e .`을 venv 밖(시스템 파이썬)에서 실행하면 `/usr/lib/python*/site-packages/`에 `.pth`가 들어가 모든 파이썬 프로세스에 영향을 준다. 권한 문제·충돌·재현 불가 상태를 만든다. 개발 환경에서는 반드시 venv를 activate한 뒤 설치한다.
+시스템 Python에 editable 설치하면 그 Python이 검색하는 설치 위치에 소스 연결이 추가될 수 있다. 모든 Python 인터프리터에 적용되는 것은 아니지만 환경 간 충돌을 피하려면 설치 대상과 실행 인터프리터를 개발용 venv로 맞춘다.
 
 ### 주의 2: `__init__.py` 없는 디렉토리
 
-`packages = ["src/foo"]`로 나열해도 `src/foo/__init__.py`가 없으면 파이썬이 `foo`를 패키지로 인식하지 않는다. 빈 `__init__.py`라도 반드시 둬야 한다.
+일반 패키지는 `__init__.py`를 사용한다. PEP 420의 암묵적 namespace package는 `__init__.py` 없이도 import할 수 있으므로, 의도한 패키지 유형과 빌드 백엔드의 배포 파일 선택을 함께 확인한다.
 
 ### 주의 3: 개발 의존성이 사라질 수 있음
 
-`[tool.uv] package = false` → `true` 전환 시 uv가 의존성 해결을 다시 하면서 **개발용 도구(pytest, ruff 등)가 프로덕션 dep에 선언되지 않았다면 제거**될 수 있다. 해결: `[dependency-groups] dev = [...]`에 명시하고 `uv add --dev pytest ruff`로 재등록.
+`uv sync`는 기본적으로 설치 대상으로 선택되지 않은 기존 패키지를 제거한다. 개발 도구는 `[dependency-groups] dev` 등에 선언하고 그룹 선택 옵션을 확인한다. `dev` 그룹은 기본으로 동기화되며, `package = false` → `true` 전환 자체나 프로덕션 의존성에 없다는 사실만으로 제거를 단정하지 않는다.
 
 ### 주의 4: wheel 경로와 sources 접두어
 
@@ -392,11 +392,11 @@ venv를 deactivate하거나 다른 venv로 바꾸면 즉시 해제된다. `.pth`
 ## 요약
 
 1. src 레이아웃 프로젝트에서 `PYTHONPATH=src`를 매번 주입하는 것은 editable install로 영구 해결할 수 있다.
-2. `pip install -e .` 또는 `uv sync`는 `site-packages`에 `.pth` 파일을 남겨 프로젝트 소스 디렉토리를 `sys.path`에 자동 추가한다.
-3. `.pth`는 **해당 venv 내부에서만** 효력을 가지므로 다른 프로젝트·다른 venv를 오염시키지 않는다.
-4. 설정은 `pyproject.toml`에 `[tool.uv] package = true` 또는 `[tool.hatch.build.targets.wheel] packages = [...]` 몇 줄로 끝난다.
-5. `uv.lock`은 내부 패키지 추가와 무관하며, 의존성 그래프가 바뀔 때만 갱신된다.
-6. 개발 의존성은 `[dependency-groups] dev` 같은 별도 그룹에 명시해야 `package = true` 전환 시 유실되지 않는다.
+2. PEP 660의 연결 방식은 백엔드가 정하며, 이 문서의 Hatchling 기본 개발 모드는 `.pth`로 소스 경로를 연결한다.
+3. 환경 격리는 실행한 인터프리터를 기준으로 이해하며, 셸 활성화 없이 `uv run`으로도 프로젝트 환경을 선택할 수 있다.
+4. Hatchling 파일 선택과 `[build-system]`을 설정하면 uv가 기본적으로 프로젝트를 editable 설치한다. `package = true`만으로 파일 선택 설정을 대신하지는 못한다.
+5. 내부 Python 패키지 추가 자체는 보통 lock 갱신을 요구하지 않지만, 메타데이터 변경과 명시적 갱신은 별도로 확인한다.
+6. 개발 도구는 필요한 의존성 그룹에 선언하고 `uv sync`의 패키지 선택·제거 동작을 확인한다.
 
 ---
 

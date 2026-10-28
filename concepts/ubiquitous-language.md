@@ -1,6 +1,6 @@
 # Ubiquitous Language
 
-> 도메인 전문가(사용자)와 개발자가 같은 단어로 같은 것을 가리키도록
+> 하나의 bounded context 안에서 도메인 전문가(사용자)와 개발자가 같은 단어로 같은 것을 가리키도록
 > 합의한 글로서리. 매 대화·문서·코드에서 발생하는 번역 비용을 0에
 > 수렴시키는 것이 목표.
 
@@ -14,21 +14,19 @@
 
 ## 2. 핵심 원칙
 
-- **단일 어휘집(SoT)**: 정의·반례·경계 사례까지 한 페이지에.
+- **문맥별 어휘집(SoT)**: 같은 bounded context 안에서 정의·반례·경계 사례를 공유한다. 다른 문맥의 어휘집과 경계·대응 관계를 구분한다.
 - **합의 후 구현**: 신규 어휘는 어휘집에 먼저 등재 → 코드는 그 뒤.
 - **내부 별칭 금지**: 같은 개념을 코드에서만 쓰는 별칭으로 부르지 않는다.
-- **충돌 발견 시 stop-the-world**: 같은 단어가 두 의미면 즉시 분리·폐기.
+- **충돌의 문맥 확인**: 같은 bounded context 안에서 같은 단어가 두 의미라면 합의를 확인하여 구분한다. 서로 다른 문맥에서의 다른 의미는 그 자체로 오류가 아니며 경계와 번역 관계를 명시한다.
 - **인라인 환원**: 리뷰·대화에서 드러난 미묘한 의미는 즉시 어휘집에 반영.
 
 ## 3. 운용 절차 — Challenge / Sharpen / Cross-ref / Update inline
 
-Pocock(2026) `grill-with-docs` 가 Evans 의 ubiquitous language 운영을 4단계로
-정식화한 것이다. 어휘집은 *결정된 합의*, 대화는 *결정 전 후보* — 둘을 섞지
-않는다.
+아래 네 항목은 Pocock의 과거 `grill-with-docs`에 담긴 실천안을 위키가 묶은 운용 제안이며, 원문이 정식화한 4단계 표준은 아니다. 대조한 과거 커밋과 현행 구성의 차이는 `sources/dev/pocock-2026-skills.md`를 참고한다. 어휘집에는 합의된 정의를 기록하고 결정 전 후보는 구분한다.
 
 - **Challenge**: 새 어휘가 등장하면 기존 정의와 부딪히는지 검토.
 - **Sharpen**: 반례·경계 사례를 끌어내 정의를 좁힌다.
-- **Cross-reference**: 관련 어휘와 연결, 충돌·중복 식별.
+- **Cross-reference**: 정의와 코드가 같은 동작을 가리키는지 확인하고 관련 어휘의 충돌·중복을 식별한다.
 - **Update inline**: 합의된 결과를 즉시 어휘집에 반영, 토론에 남기지 않는다.
 
 ## 4. 한계
@@ -41,4 +39,5 @@ Pocock(2026) `grill-with-docs` 가 Evans 의 ubiquitous language 운영을 4단�
 ## 출처
 
 - `sources/dev/evans-2003-ddd.md` — DDD 원서, ubiquitous language 정의의 1차 출처
-- `sources/dev/pocock-2026-skills.md` — Challenge/Sharpen/Cross-ref/Update inline 4단계 정식화 (`grill-with-docs`)
+- `sources/dev/evans-2015-ddd-reference.md` — bounded context 안에서 공유하는 ubiquitous language의 명시적 정의
+- `sources/dev/pocock-2026-skills.md` — 용어 검토·구체적 사례·코드 대조·인라인 갱신 실천안

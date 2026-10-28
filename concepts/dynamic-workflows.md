@@ -33,11 +33,12 @@
 
 ### 격리의 의미
 
-서브에이전트는 본체의 대화 맥락을 상속하지 않은 *깨끗한 컨텍스트*에서 돈다. 이 격리가 self-preferential bias를 깨는 메커니즘이다 — 검증자가 산출물을 만든 본인이 아니어야 공정하다.
+독립 검증을 설계할 때는 검증자가 본체의 대화 맥락을 상속하는지 확인한다. 별도 컨텍스트 창이라는 사실만으로 깨끗한 맥락을 보장하지는 않는다. 예를 들어 Claude Code의 일반 서브에이전트는 새 맥락에서 시작하지만 fork는 부모 대화를 상속한다. 격리는 자기 출력 편애를 줄이기 위한 설계 조건이며, 검증의 공정성이나 정확성을 보장하지는 않는다. 근거: `sources/dev/anthropic-claude-code-subagents.md`.
 
 ## 출처
 
 - `sources/dev/anthropic-2026-dynamic-workflows.md` — 작업별 하네스·패턴 카탈로그·세 실패 모드 원문.
+- `sources/dev/anthropic-claude-code-subagents.md` — 일반 서브에이전트와 fork의 맥락 차이
 
 ## 관련 개념
 

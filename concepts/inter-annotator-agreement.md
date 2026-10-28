@@ -52,21 +52,18 @@ Cohen 논문은 절대 임계치를 제시하지 않는다. 현장 관행의 수
 | **0.61–0.80** | **substantial** |
 | 0.81–1.00 | almost perfect |
 
-**주의**: 이 스케일은 도메인 무관 절대 기준이 아니다. NLP 태깅에서는 substantial 이상을 실무 수용 기준으로 쓰지만, 데이터셋 페이퍼는 대개 almost perfect(0.8+) 구간을 목표로 한다.
+**주의**: 이 스케일은 도메인 무관 절대 기준이 아니다. 저자도 구간 구분이 자의적임을 명시했다. Gold·silver의 수용 임계치는 이 표만으로 정하지 않고 태스크와 오류 비용에 맞춰 정한다.
 
 ## 4. kappa paradox — 왜 NER 토큰 단위에서 κ가 붕괴하는가
 
 Feinstein & Cicchetti (1990) 가 지적한 **kappa paradox**: 주변 분포가 한쪽으로 극단적으로 쏠리면 po가 매우 높아도 pe 도 덩달아 높아져 κ 가 작아진다.
 
-NER 토큰 레이블은 이 함정의 교과서 사례다:
-- 일반 문장에서 `O`(엔티티 아님) 토큰이 80–95%를 차지
-- 라벨러 둘 다 `O`를 자주 찍으므로 `pe` 가 비정상적으로 크다
-- 결과적으로 **고품질 어노테이터라도 토큰 κ 가 0.3–0.5에 머무는** 경우가 흔함
+NER에서 `O`(엔티티 아님) 토큰이 많은 코퍼스는 이 문제에 주의해야 한다. 두 라벨러의 `O` 비율이 높으면 `pe`도 커질 수 있다. `O` 비율이나 κ의 범위를 보편적인 수치로 가정하지 않고 실제 주변 분포와 일치율을 함께 보고한다.
 
-이 때문에 **NER 토큰 단위 κ 는 시스템 품질을 왜곡**한다. 현업에서는 다음과 같이 우회한다:
+토큰 단위 κ 하나로 NER 품질을 판단하지 않고, 측정하려는 불일치에 맞춰 다음 방법을 검토한다:
 
-1. **Span 단위 pair 구성** — 두 라벨러가 붙인 span의 offset 합집합을 만들고, 해당 offset에 대해서만 `(A의 타입, B의 타입)` 쌍을 만든다. 한쪽만 태그한 span은 그 offset에서 상대를 `O`로 간주. 이렇게 하면 `O` 비율을 크게 낮출 수 있다.
-2. **Span-level pairwise F1** — Prodigy·Label Studio 등 현업 툴이 공식 권장하는 지표. precision/recall로 풀어 보면 prevalence에 견고하다.
+1. **Span 단위 pair 구성** — 두 라벨러가 붙인 span의 offset 합집합에 대해 `(A의 타입, B의 타입)` 쌍을 만들고, 한쪽만 태그한 span은 상대를 `O`로 간주할 수 있다. 이는 양쪽 모두 엔티티를 표시하지 않은 영역을 제외하는 조건부 측정이므로 토큰 κ와 직접 비교하지 않는다. 경계 일치 규칙도 명시한다.
+2. **Span-level pairwise F1** — 한 라벨러를 기준으로 다른 라벨러의 span을 평가한다. exact/partial match와 집계 방식을 명시하며, F1은 우연 보정 지표가 아니라는 점을 구분한다.
 3. **Krippendorff α** — 누락·부분 일치·연속 척도까지 일반화된 지표 (아래 §6).
 
 ## 5. NER/span 태스크에서의 실전 운용
@@ -88,13 +85,9 @@ NER 토큰 레이블은 이 함정의 교과서 사례다:
 - 타입 간 off-diagonal confusion matrix (어느 타입이 어느 타입으로 혼동되는지)
 - "한쪽만 O" 케이스의 비율 (coverage mismatch 크기)
 
-### 5.3 권장 임계치
+### 5.3 수용 기준
 
-| 상황 | κ 목표 |
-|---|---|
-| 데이터셋 릴리스 (Gold) | ≥ 0.80 |
-| 연구용 silver | ≥ 0.61 (substantial) |
-| 탐색적 prototyping | 명확한 기준 없음, 방향성만 |
+Gold·silver 전체에 공통으로 적용할 κ 임계치는 이 페이지의 출처로 정당화되지 않는다. 측정 단위·라벨 분포·오류 비용과 수작업 오류 분석을 바탕으로 수용 기준을 정한다. 합의도는 모델 성능의 엄격한 상한도 아니다(`sources/labeling/richie-2022-iaa-not-ceiling.md`).
 
 ## 6. 관련 지표 — Fleiss, Krippendorff, Gwet
 
@@ -105,7 +98,7 @@ NER 토큰 레이블은 이 함정의 교과서 사례다:
 | Krippendorff α | 가변 N | 명목·서열·간격·비율 모두 | 누락 허용, 복잡 태스크 선호 |
 | Gwet AC1/AC2 | 2명+ | 명목·서열 | prevalence paradox 완화 설계 |
 
-Prodigy 같은 현업 툴은 Krippendorff α 와 Gwet AC2 를 우선 제공하는 흐름으로 가고 있다. κ 가 paradox 에 취약하다는 인식이 확산된 결과다.
+지표마다 우연 일치의 모형과 거리 함수가 다르므로, 여러 지표의 수치를 같은 척도로 해석하지 않는다.
 
 ## 7. LLM 자동 라벨 품질 검증에서의 역할
 
@@ -118,19 +111,23 @@ LLM 으로 대량 silver 학습 데이터를 생성할 때 κ 가 쓰이는 전�
        │
        └─ span offset 합집합으로 pair 구성 → κ 계산
             │
-            ├─ κ ≥ substantial → "두 독립 LLM의 합의 부분"을 silver로 채택
-            └─ 불일치 span → "확장 silver" 또는 리뷰 후보로 분리
+            ├─ 사전 정의한 품질 기준 충족 → 합의 부분을 silver 후보로 검토
+            └─ 불일치 span → 리뷰 후보로 분리
 ```
 
 한계와 보완:
 - **편향 공유 위험** — A·B 가 같은 pretrain 코퍼스를 공유하면 κ 가 부당하게 높게 나올 수 있다. `concepts/kb-anchor-verification.md` 같은 **이질적 증거**를 병행해야 한다.
 - **모델 간 관대함 차이** — 한쪽이 recall 이 넓고 다른 쪽이 보수적이면 coverage mismatch 가 커진다. κ 만 보면 "합의 안 됨"으로 보이지만, type confusion 이 극소하면 스키마는 건강하다는 의미다.
 - **Landis-Koch 적용의 함정** — 의학 휴리스틱이라 NLP 태스크의 품질 요구 수준에 맞추려면 독자 기준을 세워야 한다.
-- **연속 점수 심판으로의 이동** — LLM 심판을 이산 라벨이 아니라 *연속 점수*로 운용하면(점수 토큰 로짓 기댓값 등, `concepts/verifier-score-resolution.md`) 척도가 명목→간격/비율로 바뀐다. 이때 명목 전제의 κ 는 부적합해지고 §6 의 Krippendorff α·ICC 로 가야 한다. 연속화는 tie 를 없애 변별을 살리지만, "무엇으로 합의도를 재느냐"를 함께 바꾼다.
+- **연속 점수 심판으로의 이동** — 점수 토큰 확률의 기댓값 등으로 점수를 연속화해도 간격·비율 척도가 되거나 동점이 없어지는 것은 아니다(`concepts/verifier-score-resolution.md`). 점수 차이의 의미를 정한 뒤 Krippendorff α의 거리 함수나 ICC의 전제를 검토하여 합의도 지표를 선택한다.
 
 ## 출처
 
 - `sources/labeling/cohen-1960-kappa.md` — κ 공식과 명목 척도 정의의 원조
-- (Landis & Koch 1977 — 해석 스케일, cohen source 내 인용)
-- (Feinstein & Cicchetti 1990 — kappa paradox 규명, cohen source 내 인용)
-- (Klie et al. 2024 "Counting on Consensus" — 최근 NLP 보고 관행 리뷰, cohen source 내 인용)
+- `sources/labeling/landis-koch-1977-agreement.md` — 해석 구간과 자의적 구분이라는 주의사항
+- `sources/labeling/feinstein-cicchetti-1990-kappa-paradoxes.md` — 주변 분포 불균형과 kappa paradox
+- `sources/labeling/richie-2022-iaa-not-ceiling.md` — IAA는 모델 성능의 엄격한 상한이 아니라는 모의실험 반례
+
+### 인용 확인 보류
+
+기존의 “Klie et al. 2024, Counting on Consensus” 귀속은 확인되지 않아 이 페이지의 근거로 사용하지 않는다. 동명 논문은 Joseph James (2026), https://arxiv.org/abs/2603.06865 로 확인되지만, 별도 원문 수록 전에는 기존 주장의 근거로 대체하지 않는다.

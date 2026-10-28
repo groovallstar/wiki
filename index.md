@@ -4,6 +4,8 @@
 
 ## Concepts
 
+- `concepts/codex-daybreak.md` — Codex의 Daybreak 모델 선택·접근 등급·활성화 조건과 성능 비교 근거의 한계(검토용 초안)
+
 - `concepts/schema-driven-extraction.md` — 스키마 기반 NER·분류·구조 추출과 평가 범위
 
 - `concepts/agentic-data-generation.md` — 에이전트 기반 합성 데이터 생성(데이터 과학자 루프·난이도 격차 게이트·메타 최적화)
@@ -63,6 +65,11 @@
 ### `dev/` — 개발 도구·에이전트
 
 - `sources/dev/geeknews-2026-skill-file-management.md` — 스킬 파일 관리 토론: Git 원본·규칙과 절차 분리·새 세션 검증
+- `sources/dev/openai-daybreak-overview.md` — 공식 Daybreak 접근 등급과 모델별 거절 완화 조건
+- `sources/dev/openai-daybreak-cli.md` — 공식 CLI 설정과 세션 기본값, 명령 표시의 관측 범위
+- `sources/dev/bryann2k-llm-engineering-benchmark.md` — Hermes 환경의 Daybreak Blue·GPT-5.6 Sol 비교와 일반화 한계
+- `sources/dev/qian-daybreak-instruction-change.md` — 보안 연구자의 작업성 관측과 지침 상속으로 혼입된 모델 비교
+
 - `sources/dev/addyosmani-agent-skills.md` — Addy Osmani 의 Agent Skills 카탈로그(25종 스킬 목록·관측일·고정 커밋)
 - `sources/dev/evans-2003-ddd.md` — DDD 원서, ubiquitous language 정의의 1차 출처
 - `sources/dev/pocock-2026-skills.md` — Matt Pocock 의 Skills For Real Engineers 카탈로그

@@ -93,10 +93,11 @@ variance가 크면 처방은 정칙화·데이터 증가, mismatch가 크면 tra
 
 분할이 *무엇을* 재는지 정하면, 그 위에서 **단일 최적화 지표 1개 +
 나머지 가드레일(satisficing)** 로 의사결정을 구조화한다
-(`sources/ner/ng-2018-ml-yearning.md`). 평가의 상한은 사람 간
-합의도(IAA)로 잡는다 — 모델 성능이 IAA에 닿으면 그 위는 사람끼리도
-답이 갈리는 구간이라 더 올려도 잴 수가 없다
-(`concepts/inter-annotator-agreement.md`).
+(`sources/ner/ng-2018-ml-yearning.md`). 사람 간 합의도(IAA)는 라벨의
+일관성과 태스크의 모호성을 해석하는 참고 지표이며, 모델 성능의 엄격한
+상한은 아니다. 모델이 IAA를 초과할 수 있다는 모의실험 반례가 있다
+(`sources/labeling/richie-2022-iaa-not-ceiling.md`). 모델 지표와 IAA는
+측정 단위와 기준을 구분해 보고한다(`concepts/inter-annotator-agreement.md`).
 
 ### NER 적용 메모
 
@@ -113,3 +114,4 @@ variance가 크면 처방은 정칙화·데이터 증가, mismatch가 크면 tra
 - `sources/ner/bergmeir-benitez-2012-timeseries-cv.md` — temporal/walk-forward 분할, 시간 누수
 - `sources/ner/dwork-2015-reusable-holdout.md` — holdout 재사용·adaptive overfitting·pre-registration
 - `sources/ner/recht-2019-imagenet-generalize.md` — adaptive overfitting 실증 반례, ID 점수의 낙관성
+- `sources/labeling/richie-2022-iaa-not-ceiling.md` — IAA를 모델 성능의 엄격한 상한으로 볼 수 없는 모의실험 반례

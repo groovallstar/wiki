@@ -4,6 +4,7 @@
 - **연도**: 2026
 - **열람일**: 2026-09-14
 - **검증 기준 커밋**: `73d2a8cf86c46e21af723ffd34ce0d56668fdd14` (개발 브랜치이며 안정 릴리스와 구분한다.)
+- **보완 확인일**: 2026-10-28 (고정 커밋의 통계 초기화 순서와 공식 장애 진단 설명을 확인했다.)
 - **매체/학회**: 공식 문서 + 엔진 소스의 로그 포맷 문자열
 - **링크**:
   - https://docs.vllm.ai/en/latest/configuration/optimization.html
@@ -66,12 +67,17 @@ V1 아키텍처의 기본 모드는 `SWAP` 이 아니라 `RECOMPUTE` 다 — 되
 
 ### 운영 중 정기 통계 줄
 
-엔진이 주기적으로 찍는 한 줄은 고정 항목 여섯에 조건부 항목이 붙는 형태다.
+엔진의 정기 통계 줄은 고정 항목 여섯과 조건부 항목의 형식 문자열을 갖는다. 형식 문자열 존재와 실제 출력 여부는 구분한다.
 
 - 항상: `Avg prompt throughput: %.1f tokens/s`, `Avg generation throughput: %.1f tokens/s`, `Running: %d reqs`, `Waiting: %d reqs`, `GPU KV cache usage: %.1f%%`, `Prefix cache hit rate: %.1f%%`
-- 조건부: `Preemptions: %d`(한 번이라도 발생), `Deferred: %d reqs`(대기 중 건너뛴 요청이 있을 때), `External prefix cache hit rate`·`MM cache hit rate`(해당 기능 사용 시)
+- 조건부 형식: `Preemptions: %d`, `Deferred: %d reqs`(대기 중 건너뛴 요청이 있을 때), `External prefix cache hit rate`·`MM cache hit rate`(해당 기능 사용 시)
 
-유휴 상태에서는 `logger.info` 가 아니라 `logger.debug` 로 내려간다 — 놀고 있는 서버가 로그를 채우지 않게 하기 위해서다. 즉 **이 줄이 안 보이면 대개 요청이 없는 것**이다.
+고정 커밋의 `LoggingStatLogger.log()`는 `_update_stats()`를 호출하고, 그 안의 `_reset()`이 `num_preemptions`를 0으로 만든 뒤 `num_preemptions > 0` 출력 조건을 검사한다. 따라서 해당 커밋의 정기 로그에 preemption이 발생하면 표시된다고 안내할 수 없다. 이는 코드 경로 확인 결과이며 GPU·서버 재현은 하지 않았다. 별도의 Prometheus 누적 지표 `vllm:num_preemptions`와 해당 버전의 경고를 확인한다. 이 제한을 다른 릴리스 전체에 일반화하지 않는다.
+
+- 초기화·출력 경로: https://github.com/vllm-project/vllm/blob/73d2a8cf86c46e21af723ffd34ce0d56668fdd14/vllm/v1/metrics/loggers.py#L133-L151 및 https://github.com/vllm-project/vllm/blob/73d2a8cf86c46e21af723ffd34ce0d56668fdd14/vllm/v1/metrics/loggers.py#L236-L286 (2026-10-28 확인)
+- 별도 누적 지표: https://github.com/vllm-project/vllm/blob/73d2a8cf86c46e21af723ffd34ce0d56668fdd14/vllm/v1/metrics/loggers.py#L662-L668 (2026-10-28 확인)
+
+유휴 상태에서는 `logger.info`가 아니라 `logger.debug`로 내려간다. 통계 줄이 보이지 않는다는 사실만으로 요청 유무나 정상 동작을 확정하지 않는다.
 
 ### 지표 엔드포인트
 
@@ -99,7 +105,7 @@ V1 아키텍처의 기본 모드는 `SWAP` 이 아니라 `RECOMPUTE` 다 — 되
 - 한 요청분도 못 담을 때: `To serve at least one request with the model's max seq len (...), (... GiB KV cache is needed, which is larger than the available KV cache memory (... GiB).` 여기에 `Based on the available memory, the estimated maximum model length is N.` 이 붙어 **줄여야 할 목표치를 엔진이 직접 알려준다.** 대처는 `gpu_memory_utilization` 상향 또는 `max_model_len` 하향.
 - 예산이 아예 남지 않을 때: `No available memory for the cache blocks. Try increasing 'gpu_memory_utilization' when initializing the engine`
 - 프로파일링 중 외부 간섭: `Error in memory profiling. Initial free memory ... current free memory ...` — "This happens when other processes sharing the same container release GPU memory while vLLM is profiling during initialization." 대처는 카드를 독점시키는 것.
-- CUDA graph 관련 크래시: 문서는 `self.graph.replay()` 부근에서 죽는 경우를 들고 `--enforce-eager` 로 캡처를 꺼 원인을 가르라고 안내한다. 대가는 정상 상태의 decode 성능이다.
+- CUDA graph 관련 크래시: 문서는 `self.graph.replay()` 부근에서 죽는 경우를 들고 `--enforce-eager`로 그래프 최적화를 꺼 오류를 일으키는 CUDA 연산을 격리하라고 안내한다. 그래프 경로의 실패를 메모리 부족으로만 단정하지 않으며, eager 실행의 성능 영향은 별도로 측정한다. 근거: https://docs.vllm.ai/en/latest/usage/troubleshooting/#error-near-selfgraphreplay (2026-10-28 확인)
 - 적재가 안 끝날 때: 네트워크 파일시스템 대신 로컬 디스크에 두고, 스왑 스래싱을 확인한다. `--load-format dummy` 로 적재가 병목인지 가른다.
 - hybrid 모델 경고: `Hybrid KV cache manager is disabled for this hybrid model, ... we do not enable any optimizations for saving KV cache memory (e.g., dropping the KV cache outside the sliding window).` sliding window 레이어를 full attention 으로 취급해 캐시를 잡으므로 **메모리가 예상보다 크게 잡힌다.** 다만 계산량 절감은 유지된다.
 

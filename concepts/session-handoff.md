@@ -8,7 +8,7 @@ LLM 코딩 에이전트(Claude Code 등)는 세션이 바뀌면 "어제의 결�
 
 세 가지 문제를 동시에 다뤄야 한다:
 
-- **Context rot** — 긴 컨텍스트에서 중간 정보가 덜 참조되는 "lost in the middle"(기제는 `concepts/context-engineering.md`). 경험칙상 60% 사용률 근처에서 품질 저하.
+- **Context rot** — 긴 컨텍스트에서 필요한 정보를 활용하는 품질이 낮아지는 문제다. 정보 위치에 따른 "lost in the middle"도 관련 현상이다(`concepts/context-engineering.md`). 60% 사용률 근처에서 품질이 저하된다는 수치는 `sources/dev/epril-2026-session-context-handoff.md`의 블로그 저자가 제시한 경험칙이며 보편적 임계값은 아니다.
 - **Auto-compact 비대칭성** — 요약이 *가장 덜 똑똑한 순간*에 발동해 다음 턴에 필요한 맥락을 잘라낸다.
 - **Context amnesia** — 새 세션은 백지. 규약 문서는 "규칙"은 잇지만 "어제 왜 그 접근을 폐기했는지"는 잇지 못한다.
 
@@ -66,7 +66,7 @@ LLM 코딩 에이전트(Claude Code 등)는 세션이 바뀌면 "어제의 결�
 
 ### Tier 3 — Persistent Context (영구 메모리)
 
-- **규약 문서 계층**: repo root / 서브디렉토리 / 사용자 홈 세 층위. **변하지 않는 것**만 담는다(아키텍처 규약, 빌드 명령, 코딩 스타일, 도메인 용어집). 변하는 상태를 섞으면 매 세션 토큰이 낭비된다. 정기 prune이 중요.
+- **규약 문서 계층**: repo root / 서브디렉토리 / 사용자 홈 등 적용 범위에 맞춰 배치한다. 매 세션에 필요한 아키텍처 규약·빌드 명령·코딩 스타일·도메인 용어를 담고, 일시적인 목표·블로커·진행 상황은 작업 문서나 handoff로 분리한다. 배치와 자동 로딩 범위는 실행 환경에 따라 확인한다. Claude Code의 기준은 `sources/dev/anthropic-claude-code-memory.md`를 참고한다.
 - **Report Registry 패턴**: main 에이전트는 ~50줄짜리 `_registry.md`만 읽고, 개별 리포트는 on-demand로 로드. 예시 디렉토리 구성:
   ```
   <reports-root>/
@@ -100,3 +100,4 @@ LLM 코딩 에이전트(Claude Code 등)는 세션이 바뀌면 "어제의 결�
 ## 출처
 
 - `sources/dev/epril-2026-session-context-handoff.md` — 4계층 전략 원문 요약 (Anthropic 공식 문서·엔지니어링 블로그·커뮤니티 사례 종합)
+- `sources/dev/anthropic-claude-code-memory.md` — 상시 규약 문서의 용도와 로딩 범위

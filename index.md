@@ -4,24 +4,35 @@
 
 ## Concepts
 
-- `concepts/codex-daybreak.md` — Codex의 Daybreak 모델 선택·접근 등급·활성화 조건과 성능 비교 근거의 한계(검토용 초안)
+개념 파일은 `concepts/`의 기존 경로를 유지하며, 아래에서 주제별로 찾는다.
+
+### 데이터셋·추출·평가
 
 - `concepts/schema-driven-extraction.md` — 스키마 기반 NER·분류·구조 추출과 평가 범위
-
-- `concepts/agentic-data-generation.md` — 에이전트 기반 합성 데이터 생성(데이터 과학자 루프·난이도 격차 게이트·메타 최적화)
 - `concepts/bio-tagging.md` — BIO/IOB 태그 체계와 토큰 단위별 Span 변환
 - `concepts/data-splitting.md` — train/dev/test·train-dev·OOD·temporal 분할과 평가 설계
 - `concepts/inter-annotator-agreement.md` — 라벨러 합의도(κ 계열)와 NER/LLM 맥락 응용
 - `concepts/kb-anchor-verification.md` — 외부 지식 베이스를 앵커로 삼은 라벨 독립 검증
+- `concepts/agentic-data-generation.md` — 에이전트 기반 합성 데이터 생성(데이터 과학자 루프·난이도 격차 게이트·메타 최적화)
+- `concepts/verifier-score-resolution.md` — LLM 심판 판정을 연속 점수로 다뤄 값·통계·기준 세 축으로 해상도를 높이는 검증 방법론
+
+### 개발 도구·에이전트
+
+- `concepts/codex-daybreak.md` — Codex의 Daybreak 모델 선택·접근 등급·활성화 조건과 성능 비교 근거의 한계(검토용 초안)
 - `concepts/agent-skills.md` — 스킬 카탈로그 채택 판단과 업무별 스킬의 관리·검증
 - `concepts/token-management.md` — LLM 컨텍스트 토큰 운영 전술(도구 운용 항목은 관측 시점 기준)
 - `concepts/session-handoff.md` — 세션 전환 시 맥락 유실을 막는 4계층 핸드오프 전략
-- `concepts/src-layout-packaging.md` — Python src-layout 과 editable install
 - `concepts/ubiquitous-language.md` — 사용자·개발자 어휘 통일로 번역 비용을 제거하는 DDD 원칙
 - `concepts/dynamic-workflows.md` — 작업별 하네스·서브에이전트 오케스트레이션·세 실패 모드와 패턴 카탈로그
 - `concepts/loop-verification-gate.md` — 결정적 선통과+격리 반박자를 루프 완료 게이트로 두는 검증 방법론
 - `concepts/context-engineering.md` — LLM 읽기 3기제(관련도 어텐션·lost-in-the-middle·유한 윈도우)와 컨텍스트 조성 저술 원리(Do/Don't·가이드라인 vs 하네스)
-- `concepts/verifier-score-resolution.md` — LLM 심판 판정을 연속 점수로 다뤄 값·통계·기준 세 축으로 해상도를 높이는 검증 방법론
+
+### 개발 환경·패키징
+
+- `concepts/src-layout-packaging.md` — Python src-layout과 editable install
+
+### LLM 서빙·추론
+
 - `concepts/llm-inference-serving.md` — LLM 추론 서빙 성능의 두 단계(prefill/decode)와 KV 캐시·양자화·MoE·attention 변형·prefix caching·speculative decoding(MTP) 용어
 - `concepts/vllm-serving-operations.md` — vLLM 서버 운영: 기동 로그 다섯 단계와 메모리 예산 나눗셈·설정값 넷의 상충·운영 통계 줄과 지표로 병목 가르기·기동 실패 유형
 
@@ -47,7 +58,11 @@
 ### `labeling/` — 라벨링 품질 평가·검증
 
 - `sources/labeling/cohen-1960-kappa.md` — Cohen's κ 공식의 원조 논문
+- `sources/labeling/landis-koch-1977-agreement.md` — κ 해석 구간의 출처와 적용 범위
+- `sources/labeling/feinstein-cicchetti-1990-kappa-paradoxes.md` — 라벨 분포에 따른 높은 일치율·낮은 κ 현상
+- `sources/labeling/richie-2022-iaa-not-ceiling.md` — IAA를 모델 성능의 엄격한 상한으로 일반화할 수 없다는 모의실험
 - `sources/labeling/vrandecic-2014-wikidata.md` — Wikidata 데이터 모델·P31 원조 논문
+- `sources/labeling/geiss-2018-neckar.md` — Wikidata 타입 분류와 당시 스냅샷의 평가 결과
 - `sources/labeling/kulikov-2026-autodata.md` — Agentic Self-Instruct 자동 데이터 과학자(난이도 격차 게이트)
 - `sources/labeling/kwok-2026-llm-as-verifier.md` — LLM-as-a-Verifier: 로짓 기댓값 연속 점수·세 스케일링 축(preprint)
 
@@ -63,6 +78,12 @@
 - `sources/llm/vllm-serving-operations-docs.md` — vLLM 운영 문서·엔진 로그: 기동 로그 원문 포맷·메모리 예산 구성·preemption 경고·chunked prefill 스케줄링·지표 이름·기동 오류 원문
 
 ### `dev/` — 개발 도구·에이전트
+
+- `sources/dev/anthropic-claude-code-subagents.md` — 공식 문서의 맥락 격리·fork와 중첩 생성 조건
+- `sources/dev/anthropic-claude-code-hooks.md` — Stop 훅 재진입 방지와 루프 종료·검증 통과의 구분
+- `sources/dev/anthropic-claude-code-memory.md` — 상시 지침과 일시적인 작업 상태의 배치
+- `sources/dev/openai-reasoning-best-practices.md` — 추론 모델의 zero-shot·few-shot 적용 조건
+- `sources/dev/evans-2015-ddd-reference.md` — bounded context 안에서의 ubiquitous language
 
 - `sources/dev/geeknews-2026-skill-file-management.md` — 스킬 파일 관리 토론: Git 원본·규칙과 절차 분리·새 세션 검증
 - `sources/dev/openai-daybreak-overview.md` — 공식 Daybreak 접근 등급과 모델별 거절 완화 조건

@@ -44,7 +44,7 @@
 - **적용 근거**:
   - 긴 세션은 검증 안 된 가정을 조용히 "사실"로 굳히는데, 같은 맥락 안에서 자기 출력을 검토하면 그 굳은 가정을 그대로 물려받는다. 맥락을 끊는 것이 이 스킬의 작동 기제다.
   - 위키가 이미 같은 원리를 방법론으로 들고 있다 — `concepts/loop-verification-gate.md` 의 격리 반박자, `concepts/dynamic-workflows.md` 의 자기편애(self-preferential bias) 실패 모드. 이 스킬은 그 원리를 개인 작업 단위 절차로 내린 형태다.
-- **유의**: 서브에이전트 안에서는 중첩 생성이 막혀 "신선 맥락"이 성립하지 않는다. 저자도 그 경우를 열화 모드로 표시하라고 못 박는다 — 메인 세션에서만 온전히 돈다.
+- **유의**: 중첩 생성과 대화 상속 여부는 실행 환경·설정에 따라 다르다. 중첩 생성이 제한되거나 부모 대화를 상속하는 실행에서는 이 스킬이 요구하는 신선 맥락을 확보했는지 따로 확인하고, 확보하지 못하면 검증의 한계를 표시한다. 현재 Claude Code의 중첩 허용과 fork 예외는 `sources/dev/anthropic-claude-code-subagents.md`를 참고한다.
 
 ---
 
@@ -117,3 +117,4 @@ UI/프론트엔드/배포 계열은 CLI·배치 기반 데이터 파이프라인
 
 - `sources/dev/addyosmani-agent-skills.md` — 카탈로그 원본 및 수록 스킬 목록
 - `sources/dev/geeknews-2026-skill-file-management.md` — 업무별 스킬의 버전 관리·배포·새 세션 검증 경험
+- `sources/dev/anthropic-claude-code-subagents.md` — 실행 환경별 중첩 생성과 대화 상속 조건
